@@ -76,11 +76,11 @@ All three typography components are polymorphic via the `as` prop. Variant keys 
 ## Scripts
 
 ```bash
-npm run dev      # development server
-npm run build    # production build
-npm run start    # serve production build
-npm run lint     # ESLint
-npx tsc --noEmit # type-check (no npm script defined)
+npm run dev        # development server
+npm run build      # production build
+npm run start      # serve production build
+npm run lint       # ESLint
+npm run typecheck  # TypeScript check (tsc --noEmit)
 ```
 
 ## Git workflow
@@ -95,9 +95,10 @@ Hooks live in `.husky/` directly:
 
 | Hook | Runs |
 |------|------|
-| pre-commit | `npm run lint` |
+| pre-commit | `npm run lint` and `npm run typecheck` |
 | commit-msg | Commitlint — follow [`rules/commit-guidelines.md`](rules/commit-guidelines.md) |
-| pre-push | `npm run build` |
+| pre-merge-commit | Blocks direct merge into `main` |
+| pre-push | Blocks push to `main`; then runs `npm run build` |
 
 ## Engineering rules
 
