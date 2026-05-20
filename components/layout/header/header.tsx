@@ -1,24 +1,17 @@
 "use client";
 
 import type { MenuItem } from "@/actions/menu";
+import { calculateCartSummary } from "@/actions/cart";
 
 import { Button } from "@/components/globals/buttons/button";
 import { BodyText } from "@/components/globals/typography/body-text";
+import CheckoutProductCard from "@/components/sections/checkout/checkout-product-card";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import AvatorIcon from "@/components/icons/AvatorIcon";
-import BasketIcon from "@/components/icons/BasketIcon";
-import SearchIcon from "@/components/icons/SearchIcon";
-import { MenuIcon, XIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState, Suspense } from "react";
-import { useCart } from "@/hooks/useCart";
 import {
   Drawer,
   DrawerContent,
@@ -26,6 +19,12 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/hooks/use-cart";
+import { MenuIcon, Search, ShoppingBag, UserRound, XIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useRef, useState, Suspense } from "react";
 
 type NavItem = {
   label: string;
@@ -116,7 +115,7 @@ function Header({ menuItems = [], isLoggedIn = false }: { menuItems?: MenuItem[]
                   onClick={() => setBasketOpen(true)}
                   className="text-dark-100 hover:text-brand-pink hidden items-center justify-center gap-1.5 duration-300 sm:inline-flex"
                 >
-                  <BasketIcon />
+                  <ShoppingBag />
                   <BodyText variant="14m">Basket({getItemCount()})</BodyText>
                 </button>
                 <button
@@ -174,7 +173,7 @@ const LoginLink = ({
     >
       {children || (
         <>
-          <AvatorIcon />
+          <UserRound />
           <BodyText variant="14m">{label}</BodyText>
         </>
       )}
@@ -278,7 +277,7 @@ function MobileDrawer({
         <div className="border-dark-10/30 border-t px-6 py-6">
           <div className="flex flex-col gap-3">
             <button className="border-dark-100 text-dark-100 hover:bg-dark-100 hover:text-white-100 inline-flex w-full items-center justify-center gap-2.5 border px-5 py-2.5 transition-colors duration-300">
-              <SearchIcon />
+              <Search />
               <BodyText variant="14m" as="span">
                 Search
               </BodyText>
@@ -287,7 +286,7 @@ function MobileDrawer({
               onClick={onBasketClick}
               className="border-dark-100 text-dark-100 hover:bg-dark-100 hover:text-white-100 inline-flex w-full items-center justify-center gap-2.5 border px-5 py-2.5 transition-colors duration-300"
             >
-              <BasketIcon />
+              <ShoppingBag />
               <BodyText variant="14m" as="span">
                 Basket
               </BodyText>
@@ -297,7 +296,7 @@ function MobileDrawer({
               onClick={onClose}
               className="bg-brand-pink text-white-100 hover:bg-brand-pink/80 flex w-full h-11.5 items-center justify-center gap-2.5 px-5 py-2.5 transition-colors duration-300"
             >
-              <AvatorIcon />
+              <UserRound />
               <BodyText variant="14m" as="span">
                 {isLoggedIn ? "Account" : "Login"}
               </BodyText>
@@ -349,15 +348,12 @@ const DropdownPanel = ({ links }: { links: NonNullable<NavItem["dropdown"]> }) =
   </div>
 );
 
-import CheckoutProductCard from "@/components/sections/checkout/CheckoutProductCard";
-import { calculateCartSummary } from "@/actions/cart";
-
 function BasketDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { cart, getItemCount } = useCart();
   const summary = calculateCartSummary(cart.items);
 
   return (
-    <Drawer open={open} onOpenChange={onClose} direction="right">
+    <Drawer open={open} onOpenChange={(isOpen) => !isOpen && onClose()} direction="right">
       <DrawerContent className="flex flex-col w-full! h-full sm:max-w-137.5! p-0 rounded-none">
         <DrawerHeader className="px-6 py-4 border-b border-gray-100 flex-row items-center justify-between space-y-0">
           <DrawerTitle className="text-xl font-serif">Your Bag ({getItemCount()})</DrawerTitle>
@@ -369,7 +365,7 @@ function BasketDrawer({ open, onClose }: { open: boolean; onClose: () => void })
         <div className="flex-1 overflow-y-auto px-6 py-4 custom-scrollbar">
           {cart.items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full gap-4">
-              <BasketIcon className="w-12 h-12 text-dark-20" />
+              <ShoppingBag className="w-12 h-12 text-dark-20" />
               <BodyText variant="16r" className="text-dark-40">
                 Your bag is empty
               </BodyText>

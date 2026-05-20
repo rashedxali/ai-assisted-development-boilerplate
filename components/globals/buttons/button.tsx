@@ -4,8 +4,7 @@ import React from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import { LeadText } from "@/components/globals/typography/lead-text";
-import ArrowRight from "@/components/icons/ArrowRight";
-import { Loader2 } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 
 type BaseProps = {
   href?: string;
