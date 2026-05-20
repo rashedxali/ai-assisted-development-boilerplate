@@ -1,7 +1,7 @@
 "use client"
 import { BodyText } from "../typography/body-text"
 import { cn } from "@/lib/utils"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { RiEyeLine, RiEyeOffLine } from "@remixicon/react"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -118,13 +118,6 @@ export const AppSelectInput = ({ label, options, className, placeholder, error, 
   const currentValue = value !== undefined ? value : internalValue;
   const selectedOption = options.find((opt) => opt.value === currentValue);
 
-  // Sync internal state if defaultValue changes
-  useEffect(() => {
-    if (defaultValue !== undefined) {
-      setInternalValue((defaultValue as string) || "");
-    }
-  }, [defaultValue]);
-
   // Close when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -137,7 +130,7 @@ export const AppSelectInput = ({ label, options, className, placeholder, error, 
   }, [isOpen, name]);
 
   return (
-    <div className={cn("flex flex-col gap-3 relative w-full", `select-input-${name}`)}>
+    <div className={cn("flex flex-col gap-3 relative w-full", `select-input-${name}`, className)}>
       {label && <BodyText as="label" variant="14m" className="text-dark">{label}</BodyText>}
       
       {/* Hidden input for Form compatibility */}
@@ -173,7 +166,7 @@ export const AppSelectInput = ({ label, options, className, placeholder, error, 
                   if (value === undefined) {
                       setInternalValue(opt.value);
                   }
-                  onChange?.({ target: { name, value: opt.value } } as any);
+                  onChange?.({ target: { name: name ?? "", value: opt.value } });
                   setIsOpen(false);
                 }}
               >
@@ -198,7 +191,7 @@ export const AppSelectInput = ({ label, options, className, placeholder, error, 
 
 export const AppRadioButton = ({ label, className, ...props }: AppRadioButtonProps) => {
   return (
-    <label className="flex items-center gap-4 cursor-pointer group select-none">
+    <label className={cn("flex items-center gap-4 cursor-pointer group select-none", className)}>
       <div className="relative flex items-center justify-center">
         <input
           type="radio"
@@ -275,22 +268,16 @@ export const AppCheckbox = ({ label, className, children, ...props }: React.Comp
 export const AppSearchableSelect = ({ label, options, placeholder, value, defaultValue, onChange, name, error, errorMsg }: AppSearchableSelectProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [filteredOptions, setFilteredOptions] = useState(options);
   const [internalValue, setInternalValue] = useState<string>((defaultValue as string) || "");
 
   const currentValue = value !== undefined ? value : internalValue;
-
-  useEffect(() => {
-    setFilteredOptions(
-      options.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
-  }, [searchTerm, options]);
-
-  useEffect(() => {
-    if (defaultValue !== undefined) {
-      setInternalValue((defaultValue as string) || "");
-    }
-  }, [defaultValue]);
+  const filteredOptions = useMemo(
+    () =>
+      options.filter((opt) =>
+        opt.label.toLowerCase().includes(searchTerm.toLowerCase())
+      ),
+    [searchTerm, options]
+  );
 
   const selectedOption = options.find((opt) => opt.value === currentValue);
 
@@ -349,7 +336,7 @@ export const AppSearchableSelect = ({ label, options, placeholder, value, defaul
                     if (value === undefined) {
                         setInternalValue(opt.value);
                     }
-                    onChange?.({ target: { name, value: opt.value } } as any);
+                    onChange?.({ target: { name, value: opt.value } });
                     setIsOpen(false);
                     setSearchTerm("");
                   }}
