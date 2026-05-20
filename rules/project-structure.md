@@ -11,6 +11,7 @@ This document describes how we organize a **Next.js App Router + TypeScript** pr
 | [`app/`](../app/) | Routes, layouts, global styles (`globals.css`). Optional `/style-guide` for local token and component review. |
 | [`components/`](../components/) | **All React UI.** Sub-folders below — do not dump feature code at the root of `components/`. |
 | [`components/ui/`](../components/ui/) | **Generic primitives** (shadcn/ui, Base UI, `cva`): `button.tsx`, `input.tsx`, `dialog.tsx`, etc. Reusable across the app. |
+| [`components/globals/`](../components/globals/) | **Project-specific primitives (mandatory for UI):** typography (`body-text.tsx`, `heading-text.tsx`, `lead-text.tsx`), global buttons, inputs. **Always use these** — custom typography, buttons, or inputs are prohibited unless no existing component can satisfy the requirement. |
 | [`components/common/`](../components/common/) | **Shared non-route helpers:** error boundaries, small wrappers, meta helpers. Not for one-off page content. |
 | [`components/layout/`](../components/layout/) | **Page shells and chrome:** `header.tsx`, `footer.tsx`, `sidebar.tsx`, nav, main layout wrappers. |
 | [`components/scope/`](../components/scope/) | **Feature- or route-only components** that are not generic primitives or layout chrome. Example: `scope/dashboard/stats-card.tsx`. |
@@ -29,8 +30,8 @@ This document describes how we organize a **Next.js App Router + TypeScript** pr
 
 ## Naming
 
-- **Files:** `kebab-case.tsx` / `kebab-case.ts`.
-- **Components:** `PascalCase` function names (`PageHeader`, `StatsCard`).
+- **Files:** `kebab-case.tsx` / `kebab-case.ts` everywhere under `components/` (including `components/globals/`).
+- **Components:** `PascalCase` function names (`PageHeader`, `StatsCard`, `BodyText`).
 - **Props:** Always type props (`type Props` or inline `{ ... }: Props`).
 
 ## Component structure
@@ -53,7 +54,7 @@ Co-locate small subcomponents in the same file or a sibling file under the same 
 
 - Prefer **Server Components** by default; add **`"use client"`** only when you need browser APIs, event handlers, or client hooks.
 - Add **`middleware.ts`** when you implement auth, redirects, or locale routing.
-- Follow the framework version in `package.json` and official Next.js docs when APIs change.
+- Follow the framework version in `package.json` (**Next.js 16.2.6**) and official Next.js docs when APIs change. Consult `node_modules/next/dist/docs/` for this version's APIs.
 
 ## Optional tooling (install only if used)
 
@@ -73,6 +74,7 @@ Important UI trees should be wrapped with **`react-error-boundary`** (or Next.js
 ## Checklist
 
 - [ ] **[engineering-rules.md](engineering-rules.md)** (project standards)  
+- [ ] Typography, buttons, and inputs use **`components/globals/`** — no custom one-offs  
 - [ ] Kebab-case filenames; PascalCase component identifiers  
 - [ ] Typed props for every component  
 - [ ] `ui` vs `common` vs `layout` vs `scope` respected  

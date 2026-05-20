@@ -2,7 +2,7 @@
 
 ## Before you begin
 
-- **Node.js:** use **20.x or newer** (LTS recommended). This boilerplate targets **Next.js 15+**; older Node versions often break the toolchain.
+- **Node.js:** use **20.x or newer** (LTS recommended). This project targets **Next.js 16.2.6**; older Node versions often break the toolchain.
 - **Package manager:** use **Bun** or **npm** — both work with the scripts in `package.json`.
 
 ## 1. Clone the repository
@@ -55,10 +55,11 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ```bash
 npm run lint
+npx tsc --noEmit
 npm run build
 ```
 
-Use these before opening a PR to catch type and lint issues early.
+Use these before opening a PR to catch type and lint issues early. There is no `typecheck` npm script — run `npx tsc --noEmit` directly.
 
 ## Engineering standards
 

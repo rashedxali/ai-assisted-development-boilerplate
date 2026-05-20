@@ -22,8 +22,29 @@ We **never compromise on performance**.
 
 ## 2. UI and design system rules
 
-- Do **not** use custom typography unless absolutely necessary.
-- Prefer shared typography and UI primitives from **`components/ui/`** (or your design-system folder) where they apply.
+### Mandatory globals components
+
+**Always** use the prebuilt typography, button, and input components from **`components/globals/`**. Custom typography, buttons, or inputs are **prohibited** unless there is genuinely no existing component that can satisfy the requirement.
+
+| Category | Required source |
+|----------|----------------|
+| Typography | `BodyText`, `HeadingText`, `LeadText` in `components/globals/typography/` |
+| Buttons | `Button`, `SizeButton`, `QuantityButton`, `PrintSelectButton` in `components/globals/buttons/` |
+| Inputs | `AppInput` and its variants in `components/globals/inputs/app-input.tsx` |
+
+**Prohibited without exception:**
+
+- Raw Tailwind typography classes (`text-lg`, `font-bold`, etc.) when a typography variant exists
+- One-off `<button>`, `<input>`, `<textarea>`, or `<select>` elements styled inline in feature or scope code
+- Duplicate button/input/typography components in `components/scope/` or route files
+
+**Allowed only when no alternative exists:**
+
+- A genuinely new control type with no globals equivalent — extend `components/globals/` first; do not ship a one-off custom component in feature code
+- shadcn/ui primitives from `components/ui/` for low-level building blocks (dialogs, accordions, etc.) that are not covered by globals
+
+### General UI rules
+
 - No inline styles unless unavoidable.
 - Use design tokens (spacing, colors, typography) from the design system / `globals.css`.
 - Maintain visual consistency across the app.
