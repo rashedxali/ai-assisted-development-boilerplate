@@ -2,13 +2,19 @@
 
 Before opening a PR, confirm your work complies with **[engineering-rules.md](engineering-rules.md)** (performance, design system, state/data, a11y, security).
 
+## Git workflow
+
+- **Never push directly to `main`.** All changes must reach `main` through a pull request.
+- **Direct git merge is not allowed.** Do not merge branches locally into `main` or bypass the PR process with `git merge`.
+- Create a feature branch from `main`, commit your work, push the branch, and open a PR for review and merge.
+
 ## Git hooks (local)
 
-After **`npm install`**, the **`prepare`** script configures **Husky**. Hooks run automatically:
+Husky hooks are configured directly in **`.husky/`**. They run automatically on commit and push:
 
 | Hook | What runs |
 |------|-----------|
-| **pre-commit** | **`npm run lint`** and **`npm run typecheck`** |
+| **pre-commit** | **`npm run lint`** |
 | **commit-msg** | **Commitlint** — message must match **[commit-guidelines.md](commit-guidelines.md)** (allowed types: `feat`, `fix`, `chore`, `refactor`, `docs`, `style`, `test`, `ci`, `perf`; breaking changes use `!` after type or scope; descriptions cannot be only “updated”/“fixed” or start with capitalised “Updated”/“Fixed” — see **Disallowed vague subjects** in that doc). |
 | **pre-push** | **`npm run build`** |
 
@@ -23,6 +29,7 @@ All UI lives under **`components/`**. Pick the sub-folder that matches the kind 
 | Kind of UI | Location |
 |------------|----------|
 | Generic primitive (shadcn/ui, Base UI, `cva`, app-wide controls) | `components/ui/` |
+| Project-specific typography, buttons, inputs | `components/globals/` |
 | Error boundaries, small shared non-route helpers | `components/common/` |
 | Page shells — Header, Footer, Sidebar, nav, main layout wrappers | `components/layout/` |
 | One-off feature / route UI | `components/scope/<feature>/` |
@@ -56,6 +63,16 @@ Co-locate tiny subcomponents in the same file or a sibling file in the same fold
 - Use **Tailwind** utility classes; compose with **`cn`** from [`lib/utils.ts`](../lib/utils.ts) when merging conditional classes.
 - Prefer **design tokens** from [`globals.css`](../app/globals.css) for consistent spacing, color, and typography.
 
+### Design system (mandatory)
+
+**Always** use prebuilt components from **`components/globals/`** for typography, buttons, and inputs. Custom alternatives are **prohibited** unless there is genuinely no existing component that can satisfy the requirement.
+
+- **Typography:** `BodyText`, `HeadingText`, `LeadText` — never raw type utility classes when a variant exists.
+- **Buttons:** `Button`, `SizeButton`, `QuantityButton`, `PrintSelectButton` — never styled `<button>` elements in feature code.
+- **Inputs:** `AppInput` and its variants — never styled `<input>`, `<textarea>`, or `<select>` elements in feature code.
+
+If a required variant is missing, extend the globals component. Do not build a one-off custom control in `scope/` or route files.
+
 ## Hooks
 
 When you add shared hooks:
@@ -67,15 +84,18 @@ When you add shared hooks:
 
 ## Framework and tooling
 
-- Use the **Next.js** version pinned in `package.json` and official docs when something does not match older blog posts.
+- Use the **Next.js 16.2.6** version pinned in `package.json` and official docs when something does not match older blog posts. Consult `node_modules/next/dist/docs/` for this version's APIs.
 - Do **not** add optional stacks (TanStack Query, Zustand, etc.) until a feature requires them; see [Project structure — optional tooling](project-structure.md#optional-tooling-install-only-if-used).
 
 ## Checklist before you open a PR
 
 - [ ] **[engineering-rules.md](engineering-rules.md)** respected (performance, design system, a11y, security, etc.)
+- [ ] Typography, buttons, and inputs use **`components/globals/`** — no custom one-offs
 - [ ] Right folder under **`components/`** (`ui` vs `common` vs `layout` vs `scope`) or **`hooks/`** for shared hooks  
 - [ ] Kebab-case files, PascalCase components, typed props  
 - [ ] `"use client"` only when needed  
-- [ ] **`npm run lint`** and **`npm run typecheck`** (pre-commit hooks run both)
+- [ ] **`npm run lint`** and **`npx tsc --noEmit`** (pre-commit hook runs lint)
 - [ ] **`npm run build`** succeeds (also enforced on **`git push`**)
 - [ ] Commit message follows **[commit-guidelines.md](commit-guidelines.md)** (enforced by commit-msg hook)
+- [ ] Changes are on a **feature branch** — not pushed directly to **`main`**
+- [ ] Merge will happen via **pull request** — no direct git merge into `main`
