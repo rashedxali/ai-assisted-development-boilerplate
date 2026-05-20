@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [{ "command": ".cursor/feature-team/hooks/init-state.sh" }],
+    "preToolUse": [{ "command": ".cursor/feature-team/hooks/preflight.sh" }],
+    "postToolUse": [{ "command": ".cursor/feature-team/hooks/inject-procedure.sh" }],
+    "beforeShellExecution": [
+      { "command": ".cursor/feature-team/hooks/guard-git.sh", "matcher": "git" }
+    ],
+    "stop": [{ "command": ".cursor/feature-team/hooks/lead-identity.sh", "loop_limit": 10 }]
+  }
+}
