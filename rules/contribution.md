@@ -14,9 +14,10 @@ Husky hooks are configured directly in **`.husky/`**. They run automatically on 
 
 | Hook | What runs |
 |------|-----------|
-| **pre-commit** | **`npm run lint`** |
+| **pre-commit** | **`npm run lint`** and **`npm run typecheck`** |
 | **commit-msg** | **Commitlint** — message must match **[commit-guidelines.md](commit-guidelines.md)** (allowed types: `feat`, `fix`, `chore`, `refactor`, `docs`, `style`, `test`, `ci`, `perf`; breaking changes use `!` after type or scope; descriptions cannot be only “updated”/“fixed” or start with capitalised “Updated”/“Fixed” — see **Disallowed vague subjects** in that doc). |
-| **pre-push** | **`npm run build`** |
+| **pre-merge-commit** | **Blocks direct merge into `main`** — merge via pull request only |
+| **pre-push** | **Blocks push to `main`**; then runs **`npm run build`** |
 
 To skip temporarily (not recommended): set **`HUSKY=0`** in the environment for that Git invocation.
 
@@ -94,7 +95,7 @@ When you add shared hooks:
 - [ ] Right folder under **`components/`** (`ui` vs `common` vs `layout` vs `scope`) or **`hooks/`** for shared hooks  
 - [ ] Kebab-case files, PascalCase components, typed props  
 - [ ] `"use client"` only when needed  
-- [ ] **`npm run lint`** and **`npx tsc --noEmit`** (pre-commit hook runs lint)
+- [ ] **`npm run lint`** and **`npm run typecheck`** (pre-commit hooks run both)
 - [ ] **`npm run build`** succeeds (also enforced on **`git push`**)
 - [ ] Commit message follows **[commit-guidelines.md](commit-guidelines.md)** (enforced by commit-msg hook)
 - [ ] Changes are on a **feature branch** — not pushed directly to **`main`**

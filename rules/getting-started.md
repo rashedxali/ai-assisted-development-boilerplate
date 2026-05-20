@@ -55,11 +55,11 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ```bash
 npm run lint
-npx tsc --noEmit
+npm run typecheck
 npm run build
 ```
 
-Use these before opening a PR to catch type and lint issues early. There is no `typecheck` npm script — run `npx tsc --noEmit` directly.
+Use these before opening a PR to catch type and lint issues early.
 
 ## Engineering standards
 
