@@ -2,7 +2,7 @@
 import { BodyText } from "../typography/body-text"
 import { cn } from "@/lib/utils"
 import { useEffect, useMemo, useState } from "react"
-import { RiEyeLine, RiEyeOffLine } from "@remixicon/react"
+import { Eye, EyeOff } from "lucide-react"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
 interface AppInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -28,12 +28,13 @@ interface AppSearchableSelectProps {
   error?: boolean;
   errorMsg?: string;
 }
-interface AppSelectInputProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+interface AppSelectInputProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "onChange"> {
   label?: string;
   options: { label: string; value: string }[];
   placeholder?: string;
   error?: boolean;
   errorMsg?: string;
+  onChange?: (e: { target: { name: string; value: string } }) => void;
 }
 
 interface AppRadioButtonProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -84,7 +85,7 @@ export const AppPasswordInput = ({ label, className, ...props }: AppInputProps) 
           onClick={() => setShowPassword(!showPassword)}
           className="absolute right-4 top-1/2 -translate-y-1/2 text-dark-40 hover:text-dark-100 transition-colors"
         >
-          {showPassword ? <RiEyeOffLine size={20} /> : <RiEyeLine size={20} />}
+          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
         </button>
       </div>
     </div>
