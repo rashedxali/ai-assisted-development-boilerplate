@@ -23,8 +23,8 @@ A production-ready Next.js boilerplate engineered for agent-driven development w
 
 ```bash
 # Clone
-git clone git@github.com:your-org/your-repo.git
-cd your-repo
+git clone git@github.com:rashedxali/agent-driven-development.git
+cd agent-driven-development
 
 # Install
 bun install        # or: npm install
