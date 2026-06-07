@@ -48,6 +48,7 @@ We **never compromise on performance**.
 - No inline styles unless unavoidable.
 - Use design tokens (spacing, colors, typography) from the design system / `globals.css`.
 - Maintain visual consistency across the app.
+- Always merge conditional classes with `cn()` from `lib/utils.ts` — never string-concatenate Tailwind classes directly.
 
 ---
 
@@ -58,10 +59,20 @@ We **never compromise on performance**.
 - Follow **DRY**, **SRP**, **SOLID**, **KISS**, **YAGNI**.
 - Extract reusable logic into **`utils/`**, **`hooks/`**, and shared components.
 - Avoid overengineering: **simplicity over abstraction**.
+- No `any` — ever. Type all props, return values, and API responses explicitly. Use `unknown` at trust boundaries and narrow from there.
 
 ---
 
-## 4. State management rules
+## 4. Server vs client components
+
+- **Default to Server Components.** Every component is a Server Component unless it explicitly needs the client.
+- Add `"use client"` **only** when the component requires browser APIs, event handlers, or client hooks (`useState`, `useEffect`, `useRef`, etc.).
+- Push the `"use client"` boundary **as far down the tree as possible** — isolate client interactivity in small leaf components, not large parent trees.
+- Never add `"use client"` speculatively or as a default.
+
+---
+
+## 5. State management rules
 
 - Keep state **as local as possible**.
 - Avoid unnecessary global state.
@@ -71,7 +82,7 @@ We **never compromise on performance**.
 
 ---
 
-## 5. Data fetching and caching
+## 6. Data fetching and caching
 
 - No unnecessary API calls.
 - Prefer caching and deduplication for repeated data.
@@ -84,7 +95,7 @@ Data used in header or footer must be **cached**, **optimized**, and **not refet
 
 ---
 
-## 6. SEO best practices
+## 7. SEO best practices
 
 - Use semantic HTML (`header`, `main`, `section`, etc.).
 - Proper meta tags (`title`, `description`) via Next.js metadata where applicable.
@@ -94,7 +105,7 @@ Data used in header or footer must be **cached**, **optimized**, and **not refet
 
 ---
 
-## 7. Accessibility (a11y)
+## 8. Accessibility (a11y)
 
 - Prefer semantic elements (`button`, `nav`, landmark regions).
 - Provide **`alt`** text for meaningful images.
@@ -104,25 +115,26 @@ Data used in header or footer must be **cached**, **optimized**, and **not refet
 
 ---
 
-## 8. Error handling and resilience
+## 9. Error handling and resilience
 
 - Handle API failures gracefully with user-visible fallback UI (no blank screens).
 - Use **error boundaries** where trees can fail independently (root layout wrapper or route-level `error.tsx`).
 - Implement retry logic when appropriate.
-- Log errors properly for production diagnostics (not only `console` in prod paths).
+- Log errors properly for production diagnostics — no `console.log` in production code paths; use structured logging.
 
 ---
 
-## 9. Security rules
+## 10. Security rules
 
 - Never expose secrets (API keys, tokens) in client bundles or commits.
+- Environment variables intended for the client must use the `NEXT_PUBLIC_` prefix — all others are server-only. Never commit `.env` files.
 - Validate inputs at trust boundaries.
 - Sanitize user-generated content where it is rendered (mitigate XSS).
 - Avoid insecure assumptions in client-only logic.
 
 ---
 
-## 10. Testing and reliability
+## 11. Testing and reliability
 
 - Keep logic **testable** (pure functions in `utils/`).
 - Avoid unnecessary coupling between components.
@@ -131,7 +143,7 @@ Data used in header or footer must be **cached**, **optimized**, and **not refet
 
 ---
 
-## 11. Folder structure and naming
+## 12. Folder structure and naming
 
 - Use **clear, descriptive naming** (e.g. `getUserProfile`, not `getData`).
 - Follow the repository layout documented in [project-structure.md](project-structure.md) (`components/ui`, `common`, `layout`, `scope`, etc.).
@@ -139,7 +151,7 @@ Data used in header or footer must be **cached**, **optimized**, and **not refet
 
 ---
 
-## 12. Code splitting and loading strategy
+## 13. Code splitting and loading strategy
 
 - Lazy-load non-critical components.
 - Split routes appropriately so users do not download unused code eagerly.
@@ -147,7 +159,7 @@ Data used in header or footer must be **cached**, **optimized**, and **not refet
 
 ---
 
-## 13. API contract safety
+## 14. API contract safety
 
 - Never assume API response shape without validation.
 - Type and validate responses at boundaries where feasible.
@@ -155,7 +167,7 @@ Data used in header or footer must be **cached**, **optimized**, and **not refet
 
 ---
 
-## 14. Observability (monitoring)
+## 15. Observability (monitoring)
 
 - Track performance signals where tooling exists (**LCP**, **TTFB**, etc.).
 - Monitor API failure rates.
@@ -163,7 +175,7 @@ Data used in header or footer must be **cached**, **optimized**, and **not refet
 
 ---
 
-## 15. No breaking changes rule
+## 16. No breaking changes rule
 
 Before modifying shared behavior:
 
@@ -173,7 +185,7 @@ Before modifying shared behavior:
 
 ---
 
-## 16. No overengineering rule
+## 17. No overengineering rule
 
 - Do **not** introduce abstractions prematurely.
 - Avoid unnecessary complexity.
@@ -181,7 +193,7 @@ Before modifying shared behavior:
 
 ---
 
-## 17. Reusability enforcement
+## 18. Reusability enforcement
 
 - If a pattern appears **more than twice**, extract it.
 - Prefer reusable utilities over duplicated logic.
@@ -189,7 +201,7 @@ Before modifying shared behavior:
 
 ---
 
-## 18. Production mindset rule
+## 19. Production mindset rule
 
 Code is written for **real-world usage**.
 
@@ -197,7 +209,22 @@ Code is written for **real-world usage**.
 
 ---
 
-## 19. Development principles summary
+## 20. Scale and cost awareness
+
+Write every operation as if it will run against millions of records and thousands of concurrent users.
+
+- **Loops over data** — never fetch all records then filter in JS; filter, paginate, and sort at the database/API level.
+- **N+1 queries** — always think about how many requests or DB calls a single render triggers; batch or aggregate.
+- **Expensive operations** — heavy computation, file processing, and third-party calls belong in background jobs or cached, not in the request path.
+- **Server Component data fetching** — each `await` in a Server Component is a round-trip; deduplicate and parallelize with `Promise.all` where independent.
+- **Unbounded queries** — always apply limits and pagination; never allow a query without a `LIMIT` or equivalent.
+- **Cache deliberately** — know which data is static, per-user, or real-time; apply the correct caching strategy (`cache`, `revalidate`, CDN headers) rather than defaulting to no-cache.
+
+**Rule:** Before shipping any data operation, ask: *what does this cost at 100× the current load?*
+
+---
+
+## 21. Development principles summary
 
 Every decision should align with:
 

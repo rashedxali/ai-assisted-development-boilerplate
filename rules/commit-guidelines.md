@@ -30,6 +30,7 @@ type(scope)!: short description
 | `test` | Adding or updating tests |
 | `ci` | CI/CD pipeline changes — GitHub Actions, Vercel config |
 | `perf` | Performance improvements |
+| `wip` | Unfinished works or business |
 
 ---
 
