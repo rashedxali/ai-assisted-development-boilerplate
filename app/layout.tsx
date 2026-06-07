@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/layout/header/header";
+import Footer from "@/components/layout/footer/footer";
+import { AppProviders } from "@/providers/app-providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,9 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Agent-driven development",
-  description:
-    "A Next.js reference repo for hook-driven, multi-agent feature development with Cursor.",
+  title: "Next.js Boilerplate",
+  description: "A structured Next.js App Router boilerplate with enforced conventions.",
 };
 
 export default function RootLayout({
@@ -28,7 +30,13 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <AppProviders>
+          <Header />
+          {children}
+          <Footer />
+        </AppProviders>
+      </body>
     </html>
   );
 }

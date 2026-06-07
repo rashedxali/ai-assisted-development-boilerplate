@@ -14,12 +14,12 @@ This document describes how we organize a **Next.js App Router + TypeScript** pr
 | [`components/globals/`](../components/globals/) | **Project-specific primitives (mandatory for UI):** typography (`body-text.tsx`, `heading-text.tsx`, `lead-text.tsx`), global buttons, inputs. **Always use these** — custom typography, buttons, or inputs are prohibited unless no existing component can satisfy the requirement. |
 | [`components/common/`](../components/common/) | **Shared non-route helpers:** error boundaries, small wrappers, meta helpers. Not for one-off page content. |
 | [`components/layout/`](../components/layout/) | **Page shells and chrome:** `header.tsx`, `footer.tsx`, `sidebar.tsx`, nav, main layout wrappers. |
-| [`components/scope/`](../components/scope/) | **Feature- or route-only components** that are not generic primitives or layout chrome. Example: `scope/dashboard/stats-card.tsx`. |
-| [`hooks/`](../hooks/) | Shared custom hooks (`use-debounce.ts`, etc.). Create when you adopt them. |
-| [`lib/`](../lib/) | Shared modules **with** dependencies beyond tiny helpers: `utils.ts` (`cn` from `clsx` + `tailwind-merge`), fetchers, auth helpers, DB clients. |
-| [`utils/`](../utils/) | Pure helpers **without** external services: formatting, validation, slug helpers. |
-| [`types/`](../types/) | Shared TypeScript types and interfaces. |
-| [`services/`](../services/) | Domain logic calling APIs or `lib/` (e.g. `services/auth/login.ts`). |
+| [`components/scope/`](../components/scope/) | **Components owned by exactly one parent component** — not shared with others. Nest under the parent name. Example: `LiveBadge` used only inside `Card` → `scope/card/live-badge.tsx`. |
+| [`hooks/`](../hooks/) | Shared custom hooks reusable across multiple features (`use-debounce.ts`, etc.). Co-locate with the feature under `scope/<feature>/` if only used there. |
+| [`lib/`](../lib/) | Third-party library setup and configuration — Axios instance, Swiper config, `cn` utility, etc. Each file configures or wraps one external package. No business logic. |
+| [`utils/`](../utils/) | Pure, stateless helpers with no external dependencies: formatting, validation, date math, string transforms. |
+| [`types/`](../types/) | Shared TypeScript types and interfaces used across more than one module. Co-locate inside the module if not shared. |
+| [`services/`](../services/) | Domain logic that calls external APIs or performs async I/O. Group by domain (e.g. `services/auth/login.ts`, `services/orders/create.ts`). |
 | [`providers/`](../providers/) | React context, theme, query clients. |
 | [`constants/`](../constants/) | App-wide constants (routes, roles, copy). |
 
@@ -47,8 +47,8 @@ Co-locate small subcomponents in the same file or a sibling file under the same 
 
 ## `lib` vs `utils`
 
-- **`utils/`** — formatting, clamping, pure transforms; no network, DB, or env secrets.
-- **`lib/`** — class-name merging (`cn`), fetch wrappers, Prisma client, token parsing, etc.
+- **`utils/`** — pure, stateless transforms (formatting, clamping, validation); no network, no external deps.
+- **`lib/`** — third-party library setup (`cn`, Axios instance, Swiper config); each file owns one external package, no business logic — that belongs in `services/`.
 
 ## Next.js notes
 
@@ -78,6 +78,6 @@ Important UI trees should be wrapped with **`react-error-boundary`** (or Next.js
 - [ ] Kebab-case filenames; PascalCase component identifiers  
 - [ ] Typed props for every component  
 - [ ] `ui` vs `common` vs `layout` vs `scope` respected  
-- [ ] Logic split: `services/` (domain), `lib/` (IO/clients), `utils/` (pure helpers)  
+- [ ] Logic split: `services/` (domain/API calls), `lib/` (third-party config/wrappers), `utils/` (pure helpers)  
 - [ ] Error boundaries on fragile subtrees  
 - [ ] Types live under `types/` (avoid giant inline `any`)

@@ -15,6 +15,7 @@ module.exports = {
         "test",
         "ci",
         "perf",
+        "wip",
       ],
     ],
     "header-max-length": [2, "always", 72],
