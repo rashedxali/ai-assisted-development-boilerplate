@@ -39,9 +39,8 @@ export function Homepage() {
           A structured starting point for Next.js App Router projects with a strict design system, enforced conventions, and AI-agent-ready rules.
         </LeadText>
         <div className="flex items-center gap-4">
-          <Button href="/style-guide">View style guide</Button>
           <Button
-            href="https://github.com"
+            href="https://github.com/rashedxali/agent-driven-development"
             icon={false}
             className="bg-muted text-foreground hover:bg-muted/80"
           >
