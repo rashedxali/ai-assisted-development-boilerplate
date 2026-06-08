@@ -18,7 +18,7 @@ module.exports = {
         "wip",
       ],
     ],
-    "header-max-length": [2, "always", 72],
+    "header-max-length": [0],
     "body-max-line-length": [0],
     "subject-full-stop": [2, "never", "."],
     "no-vague-subject": [2, "always"],
