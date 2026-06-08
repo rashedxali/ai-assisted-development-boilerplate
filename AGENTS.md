@@ -36,18 +36,36 @@ Always merge conditional classes with `cn()` from [`lib/utils.ts`](lib/utils.ts)
 - **Component functions:** `PascalCase` (`BodyText`, `PageHeader`)
 - **Props:** always typed (`type Props` or inline)
 
-## Component tree
+## Project structure
+
+See [`rules/project-structure.md`](rules/project-structure.md) for the full folder layout, decision guide, and checklist.
+
+### Key folders
 
 | Path | Purpose |
 |------|---------|
-| `components/ui/` | shadcn/ui primitives (`button.tsx`, etc.) — add with `npx shadcn@latest add <component>` |
-| `components/globals/` | Project-specific primitives: typography, buttons, inputs |
+| `app/(public)/` | Public-facing routes — no auth |
+| `app/(dashboard)/` | Authenticated routes — shared dashboard layout |
+| `app/api/` | API route handlers |
+| `features/<name>/` | Full feature module: `actions/`, `components/`, `hooks/`, `queries/`, `schemas/`, `services/`, `types/`, `utils/` |
+| `components/ui/` | shadcn/ui primitives — add with `npx shadcn@latest add <component>` |
+| `components/globals/` | **Mandatory** project primitives: typography, buttons, inputs, others |
 | `components/globals/typography/` | `body-text.tsx`, `heading-text.tsx`, `lead-text.tsx` |
 | `components/globals/buttons/` | `button.tsx`, `size-button.tsx`, `quantity-button.tsx`, `print-select-button.tsx` |
 | `components/globals/inputs/` | `app-input.tsx` |
+| `components/globals/others/` | Other shared primitives (e.g. `web-vitals.tsx`) |
 | `components/layout/` | Page chrome — `header/header.tsx`, `footer/footer.tsx` |
-| `components/common/` | Shared non-route helpers (create when needed) |
-| `components/scope/` | Feature- or route-specific UI (create when needed) |
+| `components/common/` | Shared non-route helpers, error boundaries |
+| `components/scope/` | Simple route-specific UI with no full feature module needed |
+| `hooks/` | Shared custom hooks across multiple features |
+| `lib/` | Third-party library setup — one file per package, no business logic |
+| `stores/` | Global client state (Zustand / Redux) |
+| `providers/` | React context providers |
+| `services/` | Shared domain logic not tied to a single feature |
+| `utils/` | Pure stateless helpers |
+| `types/` | Shared TypeScript types |
+| `constants/` | App-wide constants (routes, roles, copy) |
+| `config/` | Env validation (`env.ts`), SEO config (`seo.ts`) |
 
 ## Typography system (mandatory)
 

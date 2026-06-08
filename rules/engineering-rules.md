@@ -224,6 +224,90 @@ Write every operation as if it will run against millions of records and thousand
 
 ---
 
+## 22. Component = UI only (separation of concerns)
+
+Components are responsible for **rendering UI and surfacing user events**. They must not contain business logic, data transformations, API calls, or complex state derivations.
+
+### What belongs where
+
+| Concern | Where |
+|---------|-------|
+| Stateful logic, derived values, side effects | `hooks/` (`use-*.ts`) |
+| Pure transforms, formatting, validation | `utils/` |
+| API calls, domain operations | `services/` |
+| Context, providers | `providers/` |
+| UI rendering, event wiring | `components/` |
+
+### Demo
+
+**Wrong** — component holds fetch logic, filtering, and derived state:
+
+```tsx
+// components/scope/orders/order-list.tsx
+export function OrderList() {
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  useEffect(() => {
+    fetch("/api/orders")
+      .then((r) => r.json())
+      .then((data) => setOrders(data.filter((o: Order) => o.status === "active")));
+  }, []);
+
+  const total = orders.reduce((sum, o) => sum + o.price, 0);
+
+  return (
+    <ul>
+      {orders.map((o) => (
+        <li key={o.id}>{o.name} — ${total}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+**Right** — logic extracted; component only renders:
+
+```ts
+// services/orders.ts
+export async function fetchActiveOrders(): Promise<Order[]> {
+  const data = await fetch("/api/orders").then((r) => r.json());
+  return data.filter((o: Order) => o.status === "active");
+}
+```
+
+```ts
+// hooks/use-orders.ts
+export function useOrders() {
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  useEffect(() => {
+    fetchActiveOrders().then(setOrders);
+  }, []);
+
+  const total = orders.reduce((sum, o) => sum + o.price, 0);
+  return { orders, total };
+}
+```
+
+```tsx
+// components/scope/orders/order-list.tsx
+export function OrderList() {
+  const { orders, total } = useOrders();
+
+  return (
+    <ul>
+      {orders.map((o) => (
+        <li key={o.id}>{o.name} — ${total}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+**Rule:** If you can unit-test the logic without rendering a component, it should not live inside a component.
+
+---
+
 ## 21. Development principles summary
 
 Every decision should align with:
