@@ -1,0 +1,74 @@
+---
+title: Introduction
+description: Production-ready Next.js boilerplate engineered for agent-driven development workflows.
+---
+
+A production-ready Next.js boilerplate engineered for agent-driven development workflows. Opinionated architecture, strict quality gates, and a comprehensive design system built in from day one.
+
+---
+
+## Stack
+
+| Layer | Version |
+|-------|---------|
+| Framework | Next.js **16.2.6** (App Router) |
+| UI | React **19.2.4** |
+| Language | TypeScript (strict) |
+| Styling | Tailwind CSS **v4** |
+| Components | shadcn/ui — `radix-nova` style |
+| Utilities | `cva`, `clsx`, `tailwind-merge`, `lucide-react`, `radix-ui` |
+
+---
+
+## Quick Start
+
+**Requirements:** Node.js 20+ · Bun
+
+```bash
+git clone git@github.com:rashedxali/agent-driven-development.git
+cd agent-driven-development
+bun install
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+---
+
+## Scripts
+
+```bash
+bun dev          # Development server
+bun run build    # Production build
+bun run start    # Serve production build
+bun run lint     # ESLint
+bun run typecheck  # TypeScript check (tsc --noEmit)
+```
+
+---
+
+## Engineering Standards
+
+All work must comply with the rules in this documentation:
+
+| Document | Covers |
+|----------|--------|
+| [Engineering Rules](/docs/rules/engineering) | Performance, a11y, security, design-system gates |
+| [Project Structure](/docs/rules/project-structure) | Folder layout, naming conventions |
+| [Contribution](/docs/rules/contribution) | PR checklist, component placement |
+| [Codebase Overview](/docs/rules/codebase) | Mental model and folder responsibilities |
+| [Getting Started](/docs/getting-started) | Setup, tooling, troubleshooting |
+
+---
+
+## PR Checklist
+
+- [ ] Engineering rules respected (performance, a11y, security)
+- [ ] Typography / buttons / inputs use `components/globals/` — no custom one-offs
+- [ ] Correct sub-folder under `components/` (`ui` vs `common` vs `layout` vs `scope`)
+- [ ] Kebab-case filenames · PascalCase component functions · typed props
+- [ ] `"use client"` only where browser APIs / event handlers / client hooks are needed
+- [ ] `bun run lint` and `bun run typecheck` pass
+- [ ] `bun run build` succeeds
+- [ ] Commit messages follow [commit guidelines](/docs/rules/commit-guidelines)
+- [ ] Changes are on a feature branch — not pushed to `main`

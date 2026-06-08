@@ -1,0 +1,54 @@
+---
+title: Getting Started
+description: How to clone, install, and run this project locally.
+---
+
+## Before you begin
+
+- **Node.js:** use **20.x or newer** (LTS recommended).
+- **Package manager:** use **Bun** — it is the default package manager for this project.
+
+## 1. Clone the repository
+
+```bash
+git clone git@github.com:rashedxali/agent-driven-development.git
+cd agent-driven-development
+```
+
+## 2. Install dependencies
+
+```bash
+bun install
+```
+
+## 3. Run the development server
+
+```bash
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+## 4. Optional checks
+
+```bash
+bun run lint
+bun run typecheck
+bun run build
+```
+
+Use these before opening a PR to catch type and lint issues early.
+
+## Engineering standards
+
+Everyone working in this repo must follow [Engineering Rules](/docs/rules/engineering) (performance, design system, accessibility, security, and related gates).
+
+For how the repo is organized, see [Codebase Overview](/docs/rules/codebase) and [Project Structure](/docs/rules/project-structure).
+
+## Troubleshooting
+
+| Symptom | Fix |
+|---------|-----|
+| Weird Next / TS errors after branch switch | Delete `.next/`, reinstall, re-run `bun run build` |
+| Port 3000 in use | `PORT=3001 bun dev` |
+| Wrong Node version | Switch to Node 20+ via nvm / fnm / volta |
