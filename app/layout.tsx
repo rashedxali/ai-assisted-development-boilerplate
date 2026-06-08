@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/header/header";
 import Footer from "@/components/layout/footer/footer";
 import { AppProviders } from "@/providers/app-providers";
+import { WebVitals } from "@/components/globals/others/web-vitals";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col">
         <AppProviders>
+          <WebVitals />
           <Header />
           {children}
           <Footer />
