@@ -42,3 +42,6 @@ next-env.d.ts
 
 # feature team workflow state (local session)
 .cursor/state/
+
+# lighthouse ci (generated audit reports)
+.lighthouseci/
