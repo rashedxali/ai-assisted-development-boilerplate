@@ -97,6 +97,7 @@ When you add shared hooks:
 - [ ] `"use client"` only when needed  
 - [ ] **`npm run lint`** and **`npm run typecheck`** (pre-commit hooks run both)
 - [ ] **`npm run build`** succeeds (also enforced on **`git push`**)
+- [ ] **Lighthouse CI** budgets pass — a11y, LCP, and CLS are blocking on PRs (see **[lighthouse-ci.md](lighthouse-ci.md)**)
 - [ ] Commit message follows **[commit-guidelines.md](commit-guidelines.md)** (enforced by commit-msg hook)
 - [ ] Changes are on a **feature branch** — not pushed directly to **`main`**
 - [ ] Merge will happen via **pull request** — no direct git merge into `main`

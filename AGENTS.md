@@ -118,6 +118,10 @@ Hooks live in `.husky/` directly:
 | pre-merge-commit | Blocks direct merge into `main` |
 | pre-push | Blocks push to `main`; then runs `npm run build` |
 
+## Continuous integration
+
+Every pull request to `main` is gated by **Lighthouse CI** ([`.github/workflows/lighthouse.yml`](.github/workflows/lighthouse.yml)) — it builds the app and scores Performance, Accessibility, SEO, and Best Practices. Accessibility, LCP, and CLS budgets are blocking. See [`rules/lighthouse-ci.md`](rules/lighthouse-ci.md) for budgets, deferred routes, and how to run it locally (`bun run lhci`).
+
 ## Engineering rules
 
 All implementation must follow the docs in [`rules/`](rules/):
@@ -125,5 +129,6 @@ All implementation must follow the docs in [`rules/`](rules/):
 - [`engineering-rules.md`](rules/engineering-rules.md) — mandatory standards (performance, a11y, security)
 - [`project-structure.md`](rules/project-structure.md) — folder layout and naming
 - [`contribution.md`](rules/contribution.md) — PR checklist and component placement
+- [`lighthouse-ci.md`](rules/lighthouse-ci.md) — automated perf/a11y/SEO PR gate
 - [`codebase.md`](rules/codebase.md) — mental model overview
 <!-- END:nextjs-agent-rules -->
