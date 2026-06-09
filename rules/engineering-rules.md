@@ -18,6 +18,8 @@ We **never compromise on performance**.
 
 **Rule:** Any change that degrades performance must be justified or rejected.
 
+**Enforcement:** [Lighthouse CI](lighthouse-ci.md) runs on every PR and blocks merge when accessibility, LCP, or CLS regress past budget.
+
 ---
 
 ## 2. UI and design system rules

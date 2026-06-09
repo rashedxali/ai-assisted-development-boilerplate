@@ -75,7 +75,7 @@ export const AppPasswordInput = ({ label, className, ...props }: AppInputProps) 
           className={cn(
             inputStyles,
             "pr-12",
-            !showPassword && "text-[20px] font-serif tracking-[2px] max-h-12.5",
+            !showPassword && "text-[20px] font-sans tracking-[2px] max-h-12.5",
             className
           )}
           {...props}
