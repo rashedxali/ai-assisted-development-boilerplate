@@ -15,7 +15,7 @@ type Props<T extends React.ElementType> = LeadTextProps<T> &
   Omit<React.ComponentPropsWithoutRef<T>, keyof LeadTextProps>;
 
 // Shared/common classes for all LeadText versions
-const commonClasses = "font-serif antialiased first-letter:uppercase";
+const commonClasses = "font-sans antialiased first-letter:uppercase";
 
 // Variant-specific classes
 const leadTextVariants: Record<LeadTextVariant, string> = {
