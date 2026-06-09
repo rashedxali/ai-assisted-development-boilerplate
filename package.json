@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "lhci": "lhci autorun",
+    "lhci": "NODE_OPTIONS=--no-deprecation lhci autorun",
+    "perf": "bun run build && bun run lhci",
     "feature-team": "bun .cursor/feature-team/src/cli.ts",
     "prepare": "husky"
   },
