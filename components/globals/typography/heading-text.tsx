@@ -5,7 +5,7 @@ type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "div";
 type HeadingVariant = "44l" | "34l" | "24l";
 
 // Shared/common classes for all headings
-const commonClasses = "font-serif font-light antialiased first-letter:uppercase";
+const commonClasses = "font-sans font-light antialiased first-letter:uppercase";
 
 // Variant-specific classes
 const headingVariants: Record<HeadingVariant, string> = {
