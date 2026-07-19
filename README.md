@@ -155,3 +155,154 @@ All work must comply with the rules in [`rules/`](rules/):
 | Weird Next / TS errors after branch switch | Delete `.next/`, reinstall, re-run `npm run build` |
 | Port 3000 in use | `PORT=3001 npm run dev` |
 | Wrong Node version | Switch to Node 20+ via nvm / fnm / volta |
+
+
+---
+
+# About AI-Driven Development Workflow
+
+The biggest feature of this boilerplate is its **agent-driven development workflow**.
+
+Instead of manually prompting an AI for every step, simply run:
+
+```text
+/ai-driven-development <feature description>
+```
+
+Example:
+
+```text
+/ai-driven-development Build a complete authentication system with email/password and Google login.
+```
+
+The workflow automatically coordinates multiple AI agents that follow your project's engineering standards, architecture, and development workflow.
+
+## How It Works
+
+### 1. 🧠 LEAD Agent — Planning
+
+The **LEAD** agent never writes code.
+
+Instead, it:
+
+- Reads `AGENTS.md` and `CLAUDE.md`
+- Reads relevant documents inside `rules/`
+- Understands the requested feature
+- Creates an implementation plan
+- Generates a feature branch
+
+Example:
+
+```text
+feature/user-authentication
+```
+
+It then creates a detailed implementation brief for the developer agent.
+
+---
+
+### 2. 👨‍💻 Developer Agent
+
+The **Developer** agent receives the complete implementation brief and:
+
+- Creates the feature on its own branch
+- Follows all project conventions
+- Uses the mandatory design system
+- Keeps Server Components by default
+- Implements the requested feature
+- Runs:
+
+```bash
+npm run lint
+npm run typecheck
+```
+
+before finishing.
+
+The developer reports:
+
+- What was built
+- Files changed
+- Any remaining questions
+
+---
+
+### 3. 🔍 Reviewer Agent
+
+After development finishes, a dedicated reviewer agent automatically audits the implementation.
+
+It reviews:
+
+- Git diff against `main`
+- Engineering rules
+- Accessibility
+- Security
+- Performance
+- Architecture
+- Design system compliance
+- Project conventions
+
+It also checks for:
+
+- Bugs
+- Missing edge cases
+- Code quality issues
+- Violations of `AGENTS.md`
+- Violations of `rules/`
+
+---
+
+### 4. 📋 LEAD Summary
+
+Finally, the LEAD agent combines both reports into a structured summary.
+
+Example:
+
+```text
+LEAD: DONE
+
+Branch:
+feature/user-authentication
+
+Status:
+Ready for PR
+
+What was built
+✔ Authentication
+✔ Google Login
+✔ Protected Routes
+✔ Session Management
+
+Review Findings
+🟢 No critical issues
+🟡 Improve loading state
+
+Next Steps
+□ Open Pull Request
+```
+
+---
+
+## Workflow Rules
+
+The workflow automatically enforces the project's engineering standards.
+
+- ✅ Never commits directly to `main`
+- ✅ Always creates a feature branch
+- ✅ Never performs local merges
+- ✅ Runs lint and type checks
+- ✅ Uses the required design system
+- ✅ Follows every document inside `rules/`
+- ✅ Produces review-ready pull requests
+
+---
+
+## Why This Matters
+
+Traditional AI coding requires developers to repeatedly explain project structure, coding standards, architecture, and best practices.
+
+With **Agent-Driven Development**, those rules are already built into the workflow.
+
+Simply describe **what** you want to build, and the agents handle **how** to build it while following your team's engineering standards.
+
+This transforms AI from a code generator into a reliable engineering teammate capable of planning, implementing, reviewing, and preparing production-ready features.
