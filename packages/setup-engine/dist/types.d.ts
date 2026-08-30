@@ -1,5 +1,5 @@
 export type FeatureKind = "subtract" | "add";
-export type FeatureId = "husky" | "lighthouse" | "github-ci" | "fumadocs" | "agent-tooling" | "sentry" | "storybook";
+export type FeatureId = "husky" | "lighthouse" | "github-ci" | "fumadocs" | "agent-tooling" | "sentry" | "storybook" | "infisical";
 export type FeatureSelection = Record<FeatureId, boolean>;
 export type FeatureManifest = {
     id: FeatureId;

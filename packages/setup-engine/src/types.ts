@@ -7,7 +7,8 @@ export type FeatureId =
   | "fumadocs"
   | "agent-tooling"
   | "sentry"
-  | "storybook";
+  | "storybook"
+  | "infisical";
 
 export type FeatureSelection = Record<FeatureId, boolean>;
 

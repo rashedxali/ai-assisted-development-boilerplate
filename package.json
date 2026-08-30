@@ -6,7 +6,9 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "next dev",
+    "dev": "infisical run -- next dev",
+    "dev:build": "infisical run -- next build",
+    "dev:start": "infisical run -- next start",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -48,6 +50,7 @@
     "husky": "^9.1.7",
     "tailwindcss": "^4.3.3",
     "typescript": "^5",
-    "zod": "^3.25.76"
+    "zod": "^3.25.76",
+    "@infisical/cli": "^0.43.128"
   }
 }

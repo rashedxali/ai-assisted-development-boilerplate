@@ -118,6 +118,7 @@ export async function applyFeatures(options) {
     await writeTextFile(join(targetDir, ".gitignore"), generateGitignore(selections));
     // Copy or merge .env.example from addons
     await mergeEnvExample(targetDir, repoRoot, selections);
+    patchInfisicalScripts(pkg, selections);
     await writePackageJson(targetDir, pkg);
     await writeMarker(targetDir, {
         version: 1,
@@ -156,6 +157,11 @@ async function mergeEnvExample(targetDir, repoRoot, selections) {
         if (storybookEnv)
             sections.push(storybookEnv.trim());
     }
+    if (selections.infisical) {
+        const infisicalEnv = await readTextFile(join(repoRoot, "addons/infisical/.env.example"));
+        if (infisicalEnv)
+            sections.push(infisicalEnv.trim());
+    }
     await writeTextFile(envPath, `${sections.join("\n\n")}\n`);
 }
 async function patchHuskyPrePush(targetDir, selections) {
@@ -175,4 +181,34 @@ async function patchHuskyPrePush(targetDir, selections) {
     const command = selections.lighthouse ? "npm run perf" : "npm run build";
     await writeTextFile(prePushPath, template.replace("__PRE_PUSH_COMMAND__", command));
     await chmod(prePushPath, 0o755);
+}
+const DEFAULT_APP_SCRIPTS = {
+    dev: "next dev",
+    build: "next build",
+    start: "next start",
+};
+const INFISICAL_SCRIPT_KEYS = ["dev:build", "dev:start"];
+function patchInfisicalScripts(pkg, selections) {
+    if (!pkg.scripts)
+        pkg.scripts = {};
+    if (selections.infisical) {
+        pkg.scripts.dev = "infisical run -- next dev";
+        pkg.scripts["dev:build"] = "infisical run -- next build";
+        pkg.scripts["dev:start"] = "infisical run -- next start";
+        pkg.scripts.build = DEFAULT_APP_SCRIPTS.build;
+        pkg.scripts.start = DEFAULT_APP_SCRIPTS.start;
+        return;
+    }
+    pkg.scripts.dev = DEFAULT_APP_SCRIPTS.dev;
+    for (const key of INFISICAL_SCRIPT_KEYS) {
+        delete pkg.scripts[key];
+    }
+    for (const [key, value] of Object.entries(DEFAULT_APP_SCRIPTS)) {
+        if (key === "dev")
+            continue;
+        const current = pkg.scripts[key];
+        if (!current || current.startsWith("infisical run --")) {
+            pkg.scripts[key] = value;
+        }
+    }
 }

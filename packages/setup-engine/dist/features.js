@@ -130,6 +130,17 @@ export const FEATURES = [
             "deploy-storybook": "bunx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN",
         },
     },
+    {
+        id: "infisical",
+        label: "Infisical",
+        description: "Secret management — CLI injects env vars for local dev scripts",
+        defaultEnabled: false,
+        kind: "add",
+        addonPaths: [".infisical.json"],
+        devDependencies: {
+            "@infisical/cli": "^0.43.128",
+        },
+    },
 ];
 export function getDefaultSelections() {
     return Object.fromEntries(FEATURES.map((f) => [f.id, f.defaultEnabled]));

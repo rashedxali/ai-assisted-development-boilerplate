@@ -56,7 +56,7 @@ bun run setup -- --no-fumadocs --sentry --storybook
 bun run setup -- --force --yes --no-husky
 ```
 
-Available flags: `--husky`, `--lighthouse`, `--github-ci`, `--fumadocs`, `--agent-tooling`, `--sentry`, `--storybook` (prefix with `--no-` to disable).
+Available flags: `--husky`, `--lighthouse`, `--github-ci`, `--fumadocs`, `--agent-tooling`, `--sentry`, `--storybook`, `--infisical` (prefix with `--no-` to disable).
 
 Open [http://localhost:3000](http://localhost:3000).
 
@@ -75,6 +75,7 @@ During setup you can enable or disable:
 | Agent tooling | on | Cursor/Claude skills and AI workflow docs |
 | Sentry | off | Error monitoring (added from `addons/sentry/`) |
 | Storybook | off | Component stories (added from `addons/storybook/`) |
+| Infisical | off | Secret management — `dev`, `dev:build`, `dev:start` use Infisical CLI |
 
 Core stack (Next.js, React, TypeScript, Tailwind v4, shadcn globals) is always included.
 
