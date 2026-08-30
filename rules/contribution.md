@@ -17,7 +17,7 @@ Husky hooks are configured directly in **`.husky/`**. They run automatically on 
 | **pre-commit** | **`npm run lint`** and **`npm run typecheck`** |
 | **commit-msg** | **Commitlint** — message must match **[commit-guidelines.md](commit-guidelines.md)** (allowed types: `feat`, `fix`, `chore`, `refactor`, `docs`, `style`, `test`, `ci`, `perf`, `wip`; breaking changes use `!` after type or scope; descriptions cannot be only “updated”/”fixed” or start with capitalised “Updated”/”Fixed” — see **Disallowed vague subjects** in that doc). |
 | **pre-merge-commit** | **Blocks direct merge into `main`** — merge via pull request only |
-| **pre-push** | **Blocks push to `main`**; then runs **`npm run build`** |
+| **pre-push** | **Blocks push to `main`**; then runs **`npm run perf`** (Lighthouse CI) |
 
 To skip temporarily (not recommended): set **`HUSKY=0`** in the environment for that Git invocation.
 

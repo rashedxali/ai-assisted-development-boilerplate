@@ -119,6 +119,9 @@ export async function applyFeatures(options) {
     // Copy or merge .env.example from addons
     await mergeEnvExample(targetDir, repoRoot, selections);
     patchInfisicalScripts(pkg, selections);
+    if (options.force) {
+        await removePath(join(targetDir, ".next"));
+    }
     await writePackageJson(targetDir, pkg);
     await writeMarker(targetDir, {
         version: 1,

@@ -116,7 +116,7 @@ Hooks live in `.husky/` directly:
 | pre-commit | `npm run lint` and `npm run typecheck` |
 | commit-msg | Commitlint — follow [`rules/commit-guidelines.md`](rules/commit-guidelines.md) |
 | pre-merge-commit | Blocks direct merge into `main` |
-| pre-push | Blocks push to `main`; then runs `npm run build` |
+| pre-push | Blocks push to `main`; runs `npm run perf` (Lighthouse CI) |
 
 ## Continuous integration
 

@@ -22,28 +22,46 @@ A production-ready Next.js boilerplate engineered for agent-driven development w
 
 ## Quick Start
 
-**Requirements:** Node.js 20+ · Bun
+**Requirements:** Node.js 20+ · Bun or npm
+
+### New project
+
+```bash
+npx create-agent-driven-app my-app
+cd my-app
+bun install
+bun dev
+```
+
+### Clone this repo
 
 ```bash
 git clone git@github.com:rashedxali/agent-driven-development.git
 cd agent-driven-development
 bun install
+bun run setup
 bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+See [Getting Started](/docs/getting-started) for optional features (Sentry, Storybook, Infisical, Husky, Lighthouse CI, Fumadocs), non-interactive setup flags, and troubleshooting.
 
 ---
 
 ## Scripts
 
 ```bash
-bun dev          # Development server
-bun run build    # Production build
-bun run start    # Serve production build
-bun run lint     # ESLint
-bun run typecheck  # TypeScript check (tsc --noEmit)
+bun dev              # Development server
+bun run build        # Production build
+bun run start        # Serve production build
+bun run lint         # ESLint
+bun run typecheck    # TypeScript check
+bun run setup        # Interactive feature selection
+bun run perf         # Build + Lighthouse CI (when enabled)
 ```
+
+When Infisical is enabled: `dev`, `dev:build`, and `dev:start` inject secrets via the Infisical CLI; plain `build` and `start` are used for CI.
 
 ---
 
@@ -57,7 +75,7 @@ All work must comply with the rules in this documentation:
 | [Project Structure](/docs/rules/project-structure) | Folder layout, naming conventions |
 | [Contribution](/docs/rules/contribution) | PR checklist, component placement |
 | [Codebase Overview](/docs/rules/codebase) | Mental model and folder responsibilities |
-| [Getting Started](/docs/getting-started) | Setup, tooling, troubleshooting |
+| [Getting Started](/docs/getting-started) | Setup, optional features, troubleshooting |
 
 ---
 

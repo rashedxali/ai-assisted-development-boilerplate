@@ -190,6 +190,10 @@ export async function applyFeatures(options: SetupOptions): Promise<void> {
 
   patchInfisicalScripts(pkg, selections);
 
+  if (options.force) {
+    await removePath(join(targetDir, ".next"));
+  }
+
   await writePackageJson(targetDir, pkg);
 
   await writeMarker(targetDir, {

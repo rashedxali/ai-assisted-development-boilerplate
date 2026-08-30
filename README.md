@@ -73,11 +73,13 @@ During setup you can enable or disable:
 | GitHub Actions | on | Lighthouse workflow on pull requests |
 | Fumadocs | on | Documentation site at `/docs` |
 | Agent tooling | on | Cursor/Claude skills and AI workflow docs |
-| Sentry | off | Error monitoring (added from `addons/sentry/`) |
-| Storybook | off | Component stories (added from `addons/storybook/`) |
-| Infisical | off | Secret management — `dev`, `dev:build`, `dev:start` use Infisical CLI |
+| Sentry | off | Error monitoring — instrumentation, Session Replay, global error page |
+| Storybook | off | Component stories with Vitest browser tests, a11y, and Chromatic |
+| Infisical | off | Secret management — `dev` / `dev:build` / `dev:start` use Infisical CLI |
 
 Core stack (Next.js, React, TypeScript, Tailwind v4, shadcn globals) is always included.
+
+Optional add-on sources live in [`addons/`](addons/) (Sentry, Storybook, Infisical, Husky). The setup engine copies or removes them based on your selections. Monorepo tooling lives in [`packages/`](packages/) (`setup-engine`, `create-app` CLI).
 
 ### Publishing the CLI
 
@@ -91,14 +93,32 @@ npm publish                     # publishes create-agent-driven-app
 
 ## Scripts
 
+Default scripts (without Infisical):
+
 ```bash
 npm run dev          # Development server
-npm run build        # Production build
+npm run build        # Production build (CI / pre-push)
 npm run start        # Serve production build
 npm run lint         # ESLint
 npm run typecheck    # TypeScript check (tsc --noEmit)
 npm run setup        # Interactive feature selection (first-time or --force)
+npm run lhci         # Lighthouse CI audit (requires build first)
+npm run perf         # build + Lighthouse CI
 ```
+
+When **Infisical** is enabled during setup, these scripts are added or changed:
+
+| Script | Command | Use when |
+|--------|---------|----------|
+| `dev` | `infisical run -- next dev` | Local dev with secrets injected |
+| `dev:build` | `infisical run -- next build` | Local prod build with secrets |
+| `dev:start` | `infisical run -- next start` | Local prod server with secrets |
+| `build` | `next build` | CI, Husky pre-push, deployments — **no Infisical** |
+| `start` | `next start` | Production serve — **no Infisical** |
+
+Infisical setup (one-time): run `infisical init`, add secrets in [Infisical Cloud](https://app.infisical.com), then `bun dev`. Secrets are exposed as `process.env` — use `NEXT_PUBLIC_` prefix for client-side values.
+
+Optional scripts when other features are enabled: `storybook`, `build-storybook`, `deploy-storybook` (Storybook).
 
 ---
 
@@ -142,6 +162,8 @@ This project enforces a mandatory design system. **Do not** write raw typography
 All three typography components accept an `as` prop (polymorphic) and use size+weight variant keys like `"16r"` or `"44l"`.
 
 > **Tailwind v4 note:** no `tailwind.config.*` exists. Theme tokens live in `@theme inline {}` inside `app/globals.css`. shadcn styles are imported via `@import "shadcn/tailwind.css"`.
+>
+> **Docs styling:** Fumadocs uses a separate stylesheet — `app/docs/docs.css` — so the docs site does not pull Fumadocs CSS into the main app bundle.
 
 ---
 
@@ -158,7 +180,7 @@ All three typography components accept an `as` prop (polymorphic) and use size+w
 | `pre-commit` | `npm run lint` + `npm run typecheck` |
 | `commit-msg` | Commitlint — see [`rules/commit-guidelines.md`](rules/commit-guidelines.md) |
 | `pre-merge-commit` | Blocks direct merge into `main` |
-| `pre-push` | Blocks push to `main`; runs `npm run build` |
+| `pre-push` | Blocks push to `main`; runs `npm run perf` (Lighthouse CI) |
 
 ### Commit Format
 
@@ -205,7 +227,9 @@ All work must comply with the rules in [`rules/`](rules/):
 
 | Symptom | Fix |
 |---------|-----|
-| Weird Next / TS errors after branch switch | Delete `.next/`, reinstall, re-run `npm run build` |
+| Weird Next / TS errors after branch switch or `setup --force` | Delete `.next/`, reinstall, re-run `npm run build`. Setup with `--force` clears `.next` automatically. |
+| `instrumentation.ts` not found after disabling Sentry | Delete `.next/` — stale cache from when Sentry was enabled |
+| Infisical / `dev` fails on first run | Run `infisical init` and log in; ensure secrets exist in your Infisical project |
 | Port 3000 in use | `PORT=3001 npm run dev` |
 | Wrong Node version | Switch to Node 20+ via nvm / fnm / volta |
 
