@@ -7,7 +7,7 @@ import * as Sentry from "@sentry/nextjs";
 import HeadingText from "@/components/globals/typography/heading-text";
 import { BodyText } from "@/components/globals/typography/body-text";
 
-import "../globals.css";
+import "@/app/globals.css";
 
 const inter = Inter({
   variable: "--font-inter-family",

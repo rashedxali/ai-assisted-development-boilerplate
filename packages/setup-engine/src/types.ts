@@ -19,7 +19,7 @@ export type FeatureManifest = {
   kind: FeatureKind;
   /** Paths relative to project root — deleted when subtract feature is declined */
   paths?: string[];
-  /** Paths copied from addons/<id>/ when add feature is selected */
+  /** Paths copied from addons/<id>/ when feature is selected or re-enabled */
   addonPaths?: string[];
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;

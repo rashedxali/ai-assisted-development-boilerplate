@@ -79,7 +79,7 @@ export function generateTsConfig(selections: FeatureSelection): string {
       ".next/dev/types/**/*.ts",
       "**/*.mts",
     ],
-    exclude: ["node_modules"],
+    exclude: ["node_modules", "addons", "packages"],
   };
 
   return `${JSON.stringify(base, null, 2)}\n`;
@@ -91,6 +91,8 @@ export function generateEslintConfig(selections: FeatureSelection): string {
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "addons/**",
+    "packages/**",
   ];
 
   if (selections.fumadocs) {

@@ -1,3 +1,4 @@
+import { chmod } from "node:fs/promises";
 import { join } from "node:path";
 import { FEATURES } from "./features.js";
 import { copyAddonPaths, readTextFile, removePath, writeTextFile, } from "./utils.js";
@@ -66,6 +67,9 @@ export async function applyFeatures(options) {
                         pkg.scripts = {};
                     Object.assign(pkg.scripts, feature.scripts);
                 }
+                if (feature.addonPaths?.length) {
+                    await copyAddonPaths(join(repoRoot, "addons", feature.id), targetDir, feature.addonPaths);
+                }
             }
         }
         if (feature.kind === "add") {
@@ -102,6 +106,9 @@ export async function applyFeatures(options) {
     if (!selections["github-ci"]) {
         await removePath(join(targetDir, ".github/workflows"));
         await removePath(join(targetDir, ".github"));
+    }
+    if (selections.husky) {
+        await patchHuskyPrePush(targetDir, selections);
     }
     // Regenerate config files
     await writeTextFile(join(targetDir, "next.config.ts"), generateNextConfig(selections));
@@ -150,4 +157,22 @@ async function mergeEnvExample(targetDir, repoRoot, selections) {
             sections.push(storybookEnv.trim());
     }
     await writeTextFile(envPath, `${sections.join("\n\n")}\n`);
+}
+async function patchHuskyPrePush(targetDir, selections) {
+    const hooks = [
+        "pre-commit",
+        "commit-msg",
+        "pre-merge-commit",
+        "pre-push",
+    ];
+    for (const hook of hooks) {
+        await chmod(join(targetDir, ".husky", hook), 0o755);
+    }
+    const prePushPath = join(targetDir, ".husky/pre-push");
+    const template = await readTextFile(prePushPath);
+    if (!template)
+        return;
+    const command = selections.lighthouse ? "npm run perf" : "npm run build";
+    await writeTextFile(prePushPath, template.replace("__PRE_PUSH_COMMAND__", command));
+    await chmod(prePushPath, 0o755);
 }

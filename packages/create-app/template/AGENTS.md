@@ -53,7 +53,7 @@ See [`rules/project-structure.md`](rules/project-structure.md) for the full fold
 | `components/globals/typography/` | `body-text.tsx`, `heading-text.tsx`, `lead-text.tsx` |
 | `components/globals/buttons/` | `button.tsx`, `size-button.tsx`, `quantity-button.tsx`, `print-select-button.tsx` |
 | `components/globals/inputs/` | `app-input.tsx` |
-| `components/globals/others/` | Other shared primitives (e.g. `web-vitals.tsx`) |
+| `components/globals/others/` | Other shared primitives |
 | `components/layout/` | Page chrome — `header/header.tsx`, `footer/footer.tsx` |
 | `components/common/` | Shared non-route helpers, error boundaries |
 | `components/scope/` | Simple route-specific UI with no full feature module needed |

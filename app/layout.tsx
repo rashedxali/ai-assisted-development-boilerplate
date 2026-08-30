@@ -3,8 +3,12 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
-  variable: "--font-inter",
+  variable: "--font-inter-family",
   subsets: ["latin"],
+  // "optional" keeps the size-adjusted fallback when Inter isn't ready in time,
+  // so the LCP text never repaints late — keeps LCP at first paint.
+  display: "optional",
+  preload: true,
 });
 
 export const metadata: Metadata = {

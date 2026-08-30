@@ -67,7 +67,7 @@ export function generateTsConfig(selections) {
             ".next/dev/types/**/*.ts",
             "**/*.mts",
         ],
-        exclude: ["node_modules"],
+        exclude: ["node_modules", "addons", "packages"],
     };
     return `${JSON.stringify(base, null, 2)}\n`;
 }
@@ -77,6 +77,8 @@ export function generateEslintConfig(selections) {
         "out/**",
         "build/**",
         "next-env.d.ts",
+        "addons/**",
+        "packages/**",
     ];
     if (selections.fumadocs) {
         ignores.push(".source/**");

@@ -8,4 +8,4 @@ while read local_ref local_sha remote_ref remote_sha; do
   fi
 done
 
-npm run perf
+__PRE_PUSH_COMMAND__

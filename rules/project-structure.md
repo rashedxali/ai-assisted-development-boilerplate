@@ -27,7 +27,7 @@ src/ (or repo root)
 │   │
 │   ├── api/                    # API route handlers
 │   │   ├── auth/route.ts
-│   │   └── web-vitals/route.ts
+│   │   └── search/route.ts
 │   │
 │   ├── layout.tsx              # Root layout
 │   ├── loading.tsx             # Root loading UI
@@ -52,7 +52,7 @@ src/ (or repo root)
 │   │   ├── typography/         # BodyText, HeadingText, LeadText
 │   │   ├── buttons/            # Button, SizeButton, QuantityButton…
 │   │   ├── inputs/             # AppInput, AppPasswordInput…
-│   │   └── others/             # Other shared primitives (e.g. WebVitals)
+│   │   └── others/             # Other shared primitives
 │   ├── layout/                 # Page chrome — header, footer, sidebar, nav
 │   ├── common/                 # Shared non-route helpers, error boundaries, wrappers
 │   └── scope/                  # Simple UI owned by exactly one route (no full feature module needed)

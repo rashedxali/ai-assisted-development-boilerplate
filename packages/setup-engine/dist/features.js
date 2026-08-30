@@ -6,6 +6,7 @@ export const FEATURES = [
         defaultEnabled: true,
         kind: "subtract",
         paths: [".husky", "commitlint.config.js"],
+        addonPaths: [".husky", "commitlint.config.js"],
         devDependencies: {
             husky: "^9.1.7",
             "@commitlint/cli": "^21.0.1",
