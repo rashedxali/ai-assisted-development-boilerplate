@@ -14,6 +14,9 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // fumadocs-mdx auto-generated files:
     ".source/**",
+    // scaffold templates and workspace packages — not part of the Next.js app:
+    "addons/**",
+    "packages/**",
   ]),
 ]);
 
