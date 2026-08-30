@@ -2,6 +2,9 @@
   "name": "agent-driven-development",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,7 +14,9 @@
     "lhci": "NODE_OPTIONS=--no-deprecation lhci autorun",
     "perf": "bun run build && bun run lhci",
     "feature-team": "bun .cursor/feature-team/src/cli.ts",
-    "prepare": "husky"
+    "prepare": "husky",
+    "setup": "bun scripts/setup.ts",
+    "build:packages": "bun run --filter @agent-driven/setup-engine build && bun run --filter create-agent-driven-app build"
   },
   "dependencies": {
     "@types/mdx": "^2.0.14",
@@ -34,14 +39,14 @@
     "@commitlint/cli": "^21.0.1",
     "@commitlint/config-conventional": "^21.0.1",
     "@lhci/cli": "^0.15.1",
-    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
     "husky": "^9.1.7",
-    "tailwindcss": "^4",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5",
     "zod": "^3.25.76"
   }

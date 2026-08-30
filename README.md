@@ -21,19 +21,70 @@ A production-ready Next.js boilerplate engineered for agent-driven development w
 
 **Requirements:** Node.js 20+ · Bun or npm
 
+### Option A — Create a new project (recommended)
+
 ```bash
-# Clone
-git clone git@github.com:rashedxali/agent-driven-development.git
-cd agent-driven-development
-
-# Install
-bun install        # or: npm install
-
-# Develop
+npx create-agent-driven-app my-app
+cd my-app
 bun dev            # or: npm run dev
 ```
 
+The CLI asks which optional features you want (Husky, Lighthouse CI, Fumadocs, Sentry, Storybook, and more), then scaffolds a trimmed project.
+
+### Option B — Clone this repo and configure in place
+
+```bash
+git clone git@github.com:rashedxali/agent-driven-development.git
+cd agent-driven-development
+bun install        # or: npm install
+bun run setup      # interactive feature selection
+bun dev
+```
+
+### Non-interactive flags
+
+Skip prompts and use defaults (or override individual features):
+
+```bash
+# Accept all defaults
+bun run setup -- --yes
+
+# Enable/disable specific features
+bun run setup -- --no-fumadocs --sentry --storybook
+
+# Re-run setup (destructive — re-applies from full template state)
+bun run setup -- --force --yes --no-husky
+```
+
+Available flags: `--husky`, `--lighthouse`, `--github-ci`, `--fumadocs`, `--agent-tooling`, `--sentry`, `--storybook` (prefix with `--no-` to disable).
+
 Open [http://localhost:3000](http://localhost:3000).
+
+---
+
+## Optional features
+
+During setup you can enable or disable:
+
+| Feature | Default | Description |
+|---------|---------|-------------|
+| Husky + Commitlint | on | Git hooks for lint, typecheck, commit format |
+| Lighthouse CI | on | Performance, a11y, and SEO audits |
+| GitHub Actions | on | Lighthouse workflow on pull requests |
+| Fumadocs | on | Documentation site at `/docs` |
+| Agent tooling | on | Cursor/Claude skills and AI workflow docs |
+| Sentry | off | Error monitoring (added from `addons/sentry/`) |
+| Storybook | off | Component stories (added from `addons/storybook/`) |
+
+Core stack (Next.js, React, TypeScript, Tailwind v4, shadcn globals) is always included.
+
+### Publishing the CLI
+
+```bash
+bun run build:packages          # build setup-engine + bundle template
+cd packages/create-app
+npm publish                     # publishes create-agent-driven-app
+```
 
 ---
 
@@ -45,6 +96,7 @@ npm run build        # Production build
 npm run start        # Serve production build
 npm run lint         # ESLint
 npm run typecheck    # TypeScript check (tsc --noEmit)
+npm run setup        # Interactive feature selection (first-time or --force)
 ```
 
 ---
