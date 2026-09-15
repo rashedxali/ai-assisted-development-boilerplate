@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { existsSync } from "node:fs";
 import { execSync } from "node:child_process";
 import * as p from "@clack/prompts";
-import { applyFeatures, finalizeScaffoldPackageJson, getDefaultSelections, hasYesFlag, parseFeatureFlags, pinResolvableVersions, promptFeatureSelection, summarizeSelections, } from "@agent-driven/setup-engine";
+import { applyFeatures, finalizeScaffoldPackageJson, getDefaultSelections, hasYesFlag, parseFeatureFlags, pinResolvableVersions, promptFeatureSelection, summarizeSelections, } from "@ai-assisted/setup-engine";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const packageRoot = resolve(__dirname, "..");
 const repoRoot = resolve(packageRoot, "../..");
@@ -78,7 +78,7 @@ async function main() {
     const positional = argv.filter((a) => !a.startsWith("-"));
     const yes = hasYesFlag(argv);
     const flagOverrides = parseFeatureFlags(argv);
-    p.intro("create-agent-driven-app");
+    p.intro("create-ai-assisted-app");
     let projectName = positional[0];
     if (!projectName) {
         const input = await p.text({

@@ -1,10 +1,10 @@
 {
-  "name": "create-agent-driven-app",
+  "name": "create-ai-assisted-app",
   "version": "0.1.0",
-  "description": "Scaffold a new Agent-Driven Development Next.js app with optional features",
+  "description": "Scaffold a new AI-Assisted Development Next.js app with optional features",
   "type": "module",
   "bin": {
-    "create-agent-driven-app": "./dist/index.js"
+    "create-ai-assisted-app": "./dist/index.js"
   },
   "files": [
     "dist",
@@ -16,7 +16,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@agent-driven/setup-engine": "workspace:*",
+    "@ai-assisted/setup-engine": "workspace:*",
     "@clack/prompts": "^0.10.1"
   },
   "devDependencies": {

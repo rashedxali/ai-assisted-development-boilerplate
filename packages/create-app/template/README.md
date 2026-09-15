@@ -1,6 +1,6 @@
-# Agent-Driven Development — Next.js Boilerplate
+# AI-Assisted Development — Next.js Boilerplate
 
-A production-ready Next.js boilerplate engineered for agent-driven development workflows. Opinionated architecture, strict quality gates, and a comprehensive design system built in from day one.
+A production-ready Next.js boilerplate engineered for AI-assisted development workflows. Opinionated architecture, strict quality gates, and a comprehensive design system built in from day one.
 
 ---
 
@@ -24,7 +24,7 @@ A production-ready Next.js boilerplate engineered for agent-driven development w
 ### Option A — Create a new project (recommended)
 
 ```bash
-npx create-agent-driven-app my-app
+npx create-ai-assisted-app my-app
 cd my-app
 bun dev            # or: npm run dev
 ```
@@ -34,8 +34,8 @@ The CLI asks which optional features you want (Husky, Lighthouse CI, Fumadocs, S
 ### Option B — Clone this repo and configure in place
 
 ```bash
-git clone git@github.com:rashedxali/agent-driven-development.git
-cd agent-driven-development
+git clone git@github.com:rashedxali/ai-assisted-development-boilerplate.git
+cd ai-assisted-development-boilerplate
 bun install        # or: npm install
 bun run setup      # interactive feature selection
 bun dev
@@ -73,32 +73,52 @@ During setup you can enable or disable:
 | GitHub Actions | on | Lighthouse workflow on pull requests |
 | Fumadocs | on | Documentation site at `/docs` |
 | Agent tooling | on | Cursor/Claude skills and AI workflow docs |
-| Sentry | off | Error monitoring (added from `addons/sentry/`) |
-| Storybook | off | Component stories (added from `addons/storybook/`) |
-| Infisical | off | Secret management — `dev`, `dev:build`, `dev:start` use Infisical CLI |
+| Sentry | off | Error monitoring — instrumentation, Session Replay, global error page |
+| Storybook | off | Component stories with Vitest browser tests, a11y, and Chromatic |
+| Infisical | off | Secret management — `dev` / `dev:build` / `dev:start` use Infisical CLI |
 
 Core stack (Next.js, React, TypeScript, Tailwind v4, shadcn globals) is always included.
+
+Optional add-on sources live in [`addons/`](addons/) (Sentry, Storybook, Infisical, Husky). The setup engine copies or removes them based on your selections. Monorepo tooling lives in [`packages/`](packages/) (`setup-engine`, `create-app` CLI).
 
 ### Publishing the CLI
 
 ```bash
 bun run build:packages          # build setup-engine + bundle template
 cd packages/create-app
-npm publish                     # publishes create-agent-driven-app
+npm publish                     # publishes create-ai-assisted-app
 ```
 
 ---
 
 ## Scripts
 
+Default scripts (without Infisical):
+
 ```bash
 npm run dev          # Development server
-npm run build        # Production build
+npm run build        # Production build (CI / pre-push)
 npm run start        # Serve production build
 npm run lint         # ESLint
 npm run typecheck    # TypeScript check (tsc --noEmit)
 npm run setup        # Interactive feature selection (first-time or --force)
+npm run lhci         # Lighthouse CI audit (requires build first)
+npm run perf         # build + Lighthouse CI
 ```
+
+When **Infisical** is enabled during setup, these scripts are added or changed:
+
+| Script | Command | Use when |
+|--------|---------|----------|
+| `dev` | `infisical run -- next dev` | Local dev with secrets injected |
+| `dev:build` | `infisical run -- next build` | Local prod build with secrets |
+| `dev:start` | `infisical run -- next start` | Local prod server with secrets |
+| `build` | `next build` | CI, Husky pre-push, deployments — **no Infisical** |
+| `start` | `next start` | Production serve — **no Infisical** |
+
+Infisical setup (one-time): run `infisical init`, add secrets in [Infisical Cloud](https://app.infisical.com), then `bun dev`. Secrets are exposed as `process.env` — use `NEXT_PUBLIC_` prefix for client-side values.
+
+Optional scripts when other features are enabled: `storybook`, `build-storybook`, `deploy-storybook` (Storybook).
 
 ---
 
@@ -142,6 +162,8 @@ This project enforces a mandatory design system. **Do not** write raw typography
 All three typography components accept an `as` prop (polymorphic) and use size+weight variant keys like `"16r"` or `"44l"`.
 
 > **Tailwind v4 note:** no `tailwind.config.*` exists. Theme tokens live in `@theme inline {}` inside `app/globals.css`. shadcn styles are imported via `@import "shadcn/tailwind.css"`.
+>
+> **Docs styling:** Fumadocs uses a separate stylesheet — `app/docs/docs.css` — so the docs site does not pull Fumadocs CSS into the main app bundle.
 
 ---
 
@@ -158,7 +180,7 @@ All three typography components accept an `as` prop (polymorphic) and use size+w
 | `pre-commit` | `npm run lint` + `npm run typecheck` |
 | `commit-msg` | Commitlint — see [`rules/commit-guidelines.md`](rules/commit-guidelines.md) |
 | `pre-merge-commit` | Blocks direct merge into `main` |
-| `pre-push` | Blocks push to `main`; runs `npm run build` |
+| `pre-push` | Blocks push to `main`; runs `npm run perf` (Lighthouse CI) |
 
 ### Commit Format
 
@@ -205,7 +227,9 @@ All work must comply with the rules in [`rules/`](rules/):
 
 | Symptom | Fix |
 |---------|-----|
-| Weird Next / TS errors after branch switch | Delete `.next/`, reinstall, re-run `npm run build` |
+| Weird Next / TS errors after branch switch or `setup --force` | Delete `.next/`, reinstall, re-run `npm run build`. Setup with `--force` clears `.next` automatically. |
+| `instrumentation.ts` not found after disabling Sentry | Delete `.next/` — stale cache from when Sentry was enabled |
+| Infisical / `dev` fails on first run | Run `infisical init` and log in; ensure secrets exist in your Infisical project |
 | Port 3000 in use | `PORT=3001 npm run dev` |
 | Wrong Node version | Switch to Node 20+ via nvm / fnm / volta |
 
@@ -214,7 +238,7 @@ All work must comply with the rules in [`rules/`](rules/):
 
 # About AI-Driven Development Workflow
 
-The biggest feature of this boilerplate is its **agent-driven development workflow**.
+The biggest feature of this boilerplate is its **AI-assisted development workflow**.
 
 Instead of manually prompting an AI for every step, simply run:
 
@@ -354,7 +378,7 @@ The workflow automatically enforces the project's engineering standards.
 
 Traditional AI coding requires developers to repeatedly explain project structure, coding standards, architecture, and best practices.
 
-With **Agent-Driven Development**, those rules are already built into the workflow.
+With **AI-Assisted Development**, those rules are already built into the workflow.
 
 Simply describe **what** you want to build, and the agents handle **how** to build it while following your team's engineering standards.
 

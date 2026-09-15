@@ -15,7 +15,7 @@ import {
   promptFeatureSelection,
   summarizeSelections,
   type FeatureSelection,
-} from "@agent-driven/setup-engine";
+} from "@ai-assisted/setup-engine";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const packageRoot = resolve(__dirname, "..");
@@ -98,7 +98,7 @@ async function main(): Promise<void> {
   const yes = hasYesFlag(argv);
   const flagOverrides = parseFeatureFlags(argv);
 
-  p.intro("create-agent-driven-app");
+  p.intro("create-ai-assisted-app");
 
   let projectName = positional[0];
 

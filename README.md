@@ -1,6 +1,6 @@
-# Agent-Driven Development — Next.js Boilerplate
+# AI-Assisted Development — Next.js Boilerplate
 
-A production-ready Next.js boilerplate engineered for agent-driven development workflows. Opinionated architecture, strict quality gates, and a comprehensive design system built in from day one.
+A production-ready Next.js boilerplate engineered for AI-assisted development workflows. Opinionated architecture, strict quality gates, and a comprehensive design system built in from day one.
 
 ---
 
@@ -24,7 +24,7 @@ A production-ready Next.js boilerplate engineered for agent-driven development w
 ### Option A — Create a new project (recommended)
 
 ```bash
-npx create-agent-driven-app my-app
+npx create-ai-assisted-app my-app
 cd my-app
 bun dev            # or: npm run dev
 ```
@@ -34,8 +34,8 @@ The CLI asks which optional features you want (Husky, Lighthouse CI, Fumadocs, S
 ### Option B — Clone this repo and configure in place
 
 ```bash
-git clone git@github.com:rashedxali/agent-driven-development.git
-cd agent-driven-development
+git clone git@github.com:rashedxali/ai-assisted-development-boilerplate.git
+cd ai-assisted-development-boilerplate
 bun install        # or: npm install
 bun run setup      # interactive feature selection
 bun dev
@@ -86,7 +86,7 @@ Optional add-on sources live in [`addons/`](addons/) (Sentry, Storybook, Infisic
 ```bash
 bun run build:packages          # build setup-engine + bundle template
 cd packages/create-app
-npm publish                     # publishes create-agent-driven-app
+npm publish                     # publishes create-ai-assisted-app
 ```
 
 ---
@@ -238,7 +238,7 @@ All work must comply with the rules in [`rules/`](rules/):
 
 # About AI-Driven Development Workflow
 
-The biggest feature of this boilerplate is its **agent-driven development workflow**.
+The biggest feature of this boilerplate is its **AI-assisted development workflow**.
 
 Instead of manually prompting an AI for every step, simply run:
 
@@ -378,7 +378,7 @@ The workflow automatically enforces the project's engineering standards.
 
 Traditional AI coding requires developers to repeatedly explain project structure, coding standards, architecture, and best practices.
 
-With **Agent-Driven Development**, those rules are already built into the workflow.
+With **AI-Assisted Development**, those rules are already built into the workflow.
 
 Simply describe **what** you want to build, and the agents handle **how** to build it while following your team's engineering standards.
 

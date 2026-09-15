@@ -5,7 +5,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # Project context
 
-**agent-driven-development** — Next.js App Router project (TypeScript).
+**ai-assisted-development-boilerplate** — Next.js App Router project (TypeScript).
 
 ## Stack
 

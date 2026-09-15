@@ -1,5 +1,5 @@
 {
-  "name": "agent-driven-development",
+  "name": "ai-assisted-development-boilerplate",
   "version": "0.1.0",
   "private": true,
   "workspaces": [
@@ -16,7 +16,7 @@
     "feature-team": "bun .cursor/feature-team/src/cli.ts",
     "prepare": "husky",
     "setup": "bun scripts/setup.ts",
-    "build:packages": "bun run --filter @agent-driven/setup-engine build && bun run --filter create-agent-driven-app build",
+    "build:packages": "bun run --filter @ai-assisted/setup-engine build && bun run --filter create-ai-assisted-app build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "deploy-storybook": "bunx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN",

@@ -1,13 +1,13 @@
 ---
 name: ai-driven-development
 description: >
-  Agent-driven feature development. LEAD plans the feature, spawns a developer
+  AI-assisted feature development. LEAD plans the feature, spawns a developer
   agent to implement it on a branch, then spawns a reviewer agent to audit the
   diff. Returns a summary with branch name and review findings.
   Trigger: /ai-driven-development <feature description>
 ---
 
-# LEAD — Agent-Driven Development
+# LEAD — AI-Assisted Development
 
 You are the LEAD. Your job: plan → delegate → synthesize. Do not write code yourself.
 

@@ -8,7 +8,7 @@
 ## Option A — Create a new project (recommended)
 
 ```bash
-npx create-agent-driven-app my-app
+npx create-ai-assisted-app my-app
 cd my-app
 bun install
 bun run setup   # only if you cloned the template repo instead of using npx
@@ -20,8 +20,8 @@ The CLI prompts for optional features (Husky, Lighthouse CI, Fumadocs, Sentry, S
 ## Option B — Clone this repo and configure in place
 
 ```bash
-git clone git@github.com:rashedxali/agent-driven-development.git
-cd agent-driven-development
+git clone git@github.com:rashedxali/ai-assisted-development-boilerplate.git
+cd ai-assisted-development-boilerplate
 bun install
 bun run setup      # interactive — pick which features to keep
 bun dev

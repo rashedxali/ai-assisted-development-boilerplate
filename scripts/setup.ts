@@ -12,7 +12,7 @@ import {
   promptFeatureSelection,
   summarizeSelections,
   type FeatureSelection,
-} from "@agent-driven/setup-engine";
+} from "@ai-assisted/setup-engine";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
@@ -23,7 +23,7 @@ async function main(): Promise<void> {
   const yes = hasYesFlag(argv);
   const flagOverrides = parseFeatureFlags(argv);
 
-  p.intro("Agent-Driven Development — project setup");
+  p.intro("AI-Assisted Development — project setup");
 
   try {
     await assertCanSetup(repoRoot, force);
