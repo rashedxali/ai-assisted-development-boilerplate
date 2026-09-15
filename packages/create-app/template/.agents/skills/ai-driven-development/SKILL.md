@@ -66,22 +66,22 @@ on a new git branch. The LEAD will review your work after.
 
 ## Phase 3: SPAWN REVIEWER
 
-After @developer returns, spawn a `caveman:cavecrew-reviewer` agent as `@reviewer`.
+After @developer returns, spawn the `reviewer` agent (defined in `.claude/agents/reviewer.md`) as `@reviewer`. If that agent type is not available, spawn a `general-purpose` agent and include the full contents of `.claude/agents/reviewer.md` in its prompt.
 
 Output to user:
 ```
 LEAD: SPAWN — @developer done. Briefing @reviewer.
 ```
 
-Pass to reviewer:
-- The git diff of the feature branch vs main
-- The feature description
-- Ask for: correctness bugs, convention violations (AGENTS.md rules), a11y, security
-
-Get the diff first:
+Confirm the branch has commits first:
 ```bash
-git diff main...feature/<name>
+git diff --stat main...feature/<name>
 ```
+
+Pass to reviewer:
+- The feature description
+- The branch name
+- Ask for: correctness bugs, convention violations (AGENTS.md and rules/), a11y, security, performance
 
 ## Phase 4: SYNTHESIZE
 

@@ -77,10 +77,6 @@ export const FEATURES: FeatureManifest[] = [
     defaultEnabled: true,
     kind: "subtract",
     paths: [".agents", ".claude", "AGENTS.md", "CLAUDE.md"],
-    scriptKeys: ["feature-team"],
-    scripts: {
-      "feature-team": "bun .cursor/feature-team/src/cli.ts",
-    },
   },
   {
     id: "sentry",

@@ -13,7 +13,6 @@
     "typecheck": "tsc --noEmit",
     "lhci": "NODE_OPTIONS=--no-deprecation lhci autorun",
     "perf": "bun run build && bun run lhci",
-    "feature-team": "bun .cursor/feature-team/src/cli.ts",
     "prepare": "husky",
     "setup": "bun scripts/setup.ts",
     "build:packages": "bun run --filter @ai-assisted/setup-engine build && bun run --filter create-ai-assisted-app build",

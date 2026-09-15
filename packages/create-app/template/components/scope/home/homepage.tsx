@@ -11,25 +11,25 @@ const WORKFLOW_STEPS = [
     step: "01",
     title: "LEAD plans",
     description:
-      "Reads AGENTS.md and rules/, scopes the feature, creates a feature branch, and writes an implementation brief. Never writes code.",
+      "Reads AGENTS.md and the relevant rules/, names the feature branch, and writes a brief for the developer agent.",
   },
   {
     step: "02",
     title: "Developer builds",
     description:
-      "Implements the brief on its own branch using the mandatory design system and Server Components by default, then runs lint and typecheck.",
+      "Creates the feature branch, implements the brief with the globals design system, and commits. Husky runs lint and typecheck on commit.",
   },
   {
     step: "03",
     title: "Reviewer audits",
     description:
-      "Reviews the diff against main for bugs, accessibility, security, performance, and violations of the project rules.",
+      "A read-only agent reviews the diff against main for bugs, rule violations, accessibility, security, and performance.",
   },
   {
     step: "04",
     title: "LEAD summarizes",
     description:
-      "Combines both reports into a single summary with the branch, what was built, review findings, and next steps.",
+      "Reports the branch, what was built, severity-tagged review findings, and whether it is ready for a PR.",
   },
 ];
 
@@ -133,9 +133,9 @@ export function Homepage() {
             One command, a full agent team
           </HeadingText>
           <BodyText variant="14r" className="leading-[150%] text-muted-foreground">
-            Describe the feature and the workflow coordinates a lead, a
-            developer, and a reviewer agent — each bound by AGENTS.md and the
-            docs in rules/.
+            A Claude Code skill that turns one prompt into a plan, an
+            implementation on a feature branch, and a code review — with
+            AGENTS.md and rules/ passed to every agent.
           </BodyText>
           <code className="w-fit max-w-full overflow-x-auto border border-border bg-muted px-4 py-3 font-mono text-[13px] text-foreground">
             /ai-driven-development &lt;feature description&gt;

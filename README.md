@@ -238,9 +238,9 @@ All work must comply with the rules in [`rules/`](rules/):
 
 # About AI-Driven Development Workflow
 
-The biggest feature of this boilerplate is its **AI-assisted development workflow**.
+The biggest feature of this boilerplate is its **AI-assisted development workflow**: a [Claude Code](https://claude.com/claude-code) skill (`.agents/skills/ai-driven-development/SKILL.md`) that coordinates several agents from a single prompt.
 
-Instead of manually prompting an AI for every step, simply run:
+Instead of manually prompting an AI for every step, run this inside Claude Code:
 
 ```text
 /ai-driven-development <feature description>
@@ -252,13 +252,13 @@ Example:
 /ai-driven-development Build a complete authentication system with email/password and Google login.
 ```
 
-The workflow automatically coordinates multiple AI agents that follow your project's engineering standards, architecture, and development workflow.
+The skill is a set of instructions for Claude, not a script. Claude follows it to spawn a developer agent and a reviewer agent with the Agent tool. The hard guarantees come from the repo itself: Husky runs lint and typecheck on every commit, and blocks pushes to `main`.
 
 ## How It Works
 
 ### 1. 🧠 LEAD Agent — Planning
 
-The **LEAD** agent never writes code.
+The **LEAD** is the main Claude Code session. It is instructed not to write code itself.
 
 Instead, it:
 
@@ -266,7 +266,7 @@ Instead, it:
 - Reads relevant documents inside `rules/`
 - Understands the requested feature
 - Creates an implementation plan
-- Generates a feature branch
+- Picks the feature branch name
 
 Example:
 
@@ -282,7 +282,7 @@ It then creates a detailed implementation brief for the developer agent.
 
 The **Developer** agent receives the complete implementation brief and:
 
-- Creates the feature on its own branch
+- Creates the feature branch and commits its work there
 - Follows all project conventions
 - Uses the mandatory design system
 - Keeps Server Components by default
@@ -306,7 +306,7 @@ The developer reports:
 
 ### 3. 🔍 Reviewer Agent
 
-After development finishes, a dedicated reviewer agent automatically audits the implementation.
+After development finishes, the LEAD spawns the read-only `reviewer` agent defined in [`.claude/agents/reviewer.md`](.claude/agents/reviewer.md). If that agent type is unavailable, the LEAD falls back to a `general-purpose` agent with the same instructions.
 
 It reviews:
 
@@ -362,15 +362,15 @@ Next Steps
 
 ## Workflow Rules
 
-The workflow automatically enforces the project's engineering standards.
+The skill instructs every agent to follow the project's engineering standards. Items marked **(enforced)** are also blocked by Husky hooks, regardless of what the agent does.
 
-- ✅ Never commits directly to `main`
-- ✅ Always creates a feature branch
-- ✅ Never performs local merges
-- ✅ Runs lint and type checks
+- ✅ Never commits directly to `main` — pushes to `main` are blocked **(enforced)**
+- ✅ Always works on a feature branch
+- ✅ Never performs local merges — merge commits into `main` are blocked **(enforced)**
+- ✅ Runs lint and type checks — pre-commit hook **(enforced)**
 - ✅ Uses the required design system
-- ✅ Follows every document inside `rules/`
-- ✅ Produces review-ready pull requests
+- ✅ Follows the documents inside `rules/`
+- ✅ Ends with a review and a PR-ready summary
 
 ---
 
@@ -380,6 +380,6 @@ Traditional AI coding requires developers to repeatedly explain project structur
 
 With **AI-Assisted Development**, those rules are already built into the workflow.
 
-Simply describe **what** you want to build, and the agents handle **how** to build it while following your team's engineering standards.
+Describe **what** you want to build, and the agents handle **how** to build it with your team's engineering standards already in their instructions.
 
-This transforms AI from a code generator into a reliable engineering teammate capable of planning, implementing, reviewing, and preparing production-ready features.
+Always read the LEAD summary and the diff before opening the PR — the agents follow instructions, but the review is still yours.

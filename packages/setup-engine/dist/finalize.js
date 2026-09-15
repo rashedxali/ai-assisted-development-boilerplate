@@ -1,6 +1,6 @@
 import { join } from "node:path";
 import { readTextFile, writeTextFile } from "./utils.js";
-const BOILERPLATE_SCRIPTS = new Set(["setup", "build:packages", "prepare", "feature-team"]);
+const BOILERPLATE_SCRIPTS = new Set(["setup", "build:packages", "prepare"]);
 /**
  * Cleans package.json for a scaffolded app (not the monorepo template repo).
  */
