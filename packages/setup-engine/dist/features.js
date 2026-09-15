@@ -93,7 +93,7 @@ export const FEATURES = [
             "app/global-error.tsx",
         ],
         dependencies: {
-            "@sentry/nextjs": "^10.57.0",
+            "@sentry/nextjs": "^10.73.0",
         },
     },
     {

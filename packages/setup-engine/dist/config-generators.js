@@ -6,7 +6,7 @@ export function generateNextConfig(selections) {
         lines.push('import { createMDX } from "fumadocs-mdx/next";');
     }
     if (hasSentry) {
-        lines.push('import { withSentryConfig } from "@sentry/nextjs";');
+        lines.push('import { withSentryConfig } from "@sentry/nextjs/config";');
     }
     lines.push("");
     lines.push("const nextConfig: NextConfig = {");

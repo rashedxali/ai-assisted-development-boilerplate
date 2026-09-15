@@ -11,7 +11,7 @@ export function generateNextConfig(selections: FeatureSelection): string {
   }
 
   if (hasSentry) {
-    lines.push('import { withSentryConfig } from "@sentry/nextjs";');
+    lines.push('import { withSentryConfig } from "@sentry/nextjs/config";');
   }
 
   lines.push("");
