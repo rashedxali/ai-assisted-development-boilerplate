@@ -46,5 +46,11 @@ next-env.d.ts
 # lighthouse ci (generated audit reports)
 .lighthouseci/
 
+# storybook
+storybook-static/
+
+# sentry
+.sentryclirc
+
 # boilerplate setup marker
 .boilerplate.json

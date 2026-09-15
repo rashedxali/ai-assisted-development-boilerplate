@@ -1,6 +1,6 @@
 import type { ApiResponse } from "@/types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
 export async function fetchResource<T>(
   endpoint: string,
