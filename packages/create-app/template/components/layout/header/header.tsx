@@ -5,7 +5,6 @@ import { ROUTES } from "@/constants/routes";
 
 const NAV_LINKS = [
   { label: "Home", href: ROUTES.HOME },
-  { label: "Style Guide", href: ROUTES.STYLE_GUIDE },
 ];
 
 export default function Header() {
@@ -14,7 +13,7 @@ export default function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href={ROUTES.HOME}>
           <HeadingText variant="24l" as="p">
-            Boilerplate
+            AI-Assisted
           </HeadingText>
         </Link>
         <nav className="flex items-center gap-6">

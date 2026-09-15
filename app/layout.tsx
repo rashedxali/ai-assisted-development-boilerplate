@@ -12,8 +12,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js Boilerplate",
-  description: "A structured Next.js App Router boilerplate with enforced conventions.",
+  title: "AI-Assisted Development Boilerplate",
+  description:
+    "A production-ready Next.js boilerplate where AI agents plan, build, and review features while following your conventions.",
 };
 
 export default function RootLayout({
